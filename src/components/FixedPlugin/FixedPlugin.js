@@ -24,7 +24,7 @@ class FixedPlugin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      classes: "dropdown show",
+      classes: "dropdown",
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -129,39 +129,6 @@ class FixedPlugin extends Component {
                   }}
                 />
               </div>
-            </li>
-            <li className="button-container">
-              <Button
-                href="https://www.creative-tim.com/product/paper-dashboard-react?ref=pdr-fixed-plugin"
-                color="primary"
-                block
-                className="btn-round"
-              >
-                Download now
-              </Button>
-            </li>
-            <li className="button-container">
-              <Button
-                href="https://www.creative-tim.com/product/paper-dashboard-react/#/documentation/tutorial?ref=pdr-fixed-plugin"
-                color="default"
-                block
-                className="btn-round"
-                outline
-              >
-                <i className="nc-icon nc-paper" /> Documentation
-              </Button>
-            </li>
-            <li className="header-title">Want more components?</li>
-            <li className="button-container">
-              <Button
-                href="https://www.creative-tim.com/product/paper-dashboard-pro-react?ref=pdr-fixed-plugin"
-                color="danger"
-                block
-                className="btn-round"
-                target="_blank"
-              >
-                Get pro version
-              </Button>
             </li>
           </ul>
         </div>

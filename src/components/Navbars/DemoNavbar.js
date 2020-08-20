@@ -188,7 +188,7 @@ class Header extends React.Component {
                 </DropdownMenu>
               </Dropdown>
               <NavItem>
-                <Link to="#pablo" className="nav-link btn-rotate">
+                <Link onClick={()=> {sessionStorage.removeItem('jwt');window.location.reload(false)}} className="nav-link btn-rotate">
                   <i className=" fa-sign-in fa" />
                   <p>
                     <span className=" d-md-block">Se déconnecter</span>
