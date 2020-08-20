@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal, ModalHeader, ModalBody, FormFeedback,Form, Input, FormGroup, Label, Row, Table, Col, Card, CardHeader, CardTitle, CardBody } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, FormFeedback, Form, Input, FormGroup, Label, Row, Table, Col, Card, CardHeader, CardTitle, CardBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 
@@ -26,6 +26,7 @@ class Utilisateurs extends React.Component {
         this.addhandleBlur = this.addhandleBlur.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.checkUser = this.checkUser.bind(this);
+        this.addUser = this.addUser.bind(this);
 
     }
 
@@ -41,9 +42,37 @@ class Utilisateurs extends React.Component {
     }
 
     addhandleSubmit(event) {
-        console.log("Current State is:" + JSON.stringify(this.state))
-        alert("Current State is:" + JSON.stringify(this.state))
         event.preventDefault();
+
+        console.log("Current State is:" + JSON.stringify(this.state))
+        const errors = this.addvalidate(this.state.addusername, this.state.addpassword);
+        if (errors.addusername === '' && errors.addpassword === '' && this.state.addusername !== '' && this.state.addpassword !== ''){
+        const user = {username : this.state.addusername,password : this.state.addpassword , role: this.state.addType};
+        console.log(user);
+        this.addUser(user);
+        this.toggleModal();
+        this.setState({
+            addusername : '',
+            addpassword : '' ,
+            addType: 'USER'
+        });
+    }
+
+    }
+
+    addUser(user) {
+        const token = sessionStorage.getItem('jwt');
+        fetch("http://localhost:8081/adduser",
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token
+                },
+                body: JSON.stringify(user)
+            })
+            .then(res => this.fetchUsers())
+            .catch(err => console.error(err))
     }
 
     addhandleBlur = (field) => (evt) => {
@@ -62,7 +91,7 @@ class Utilisateurs extends React.Component {
             errors.addusername = 'Username should be >= 4 characters';
         if (this.state.touched.addpassword && addpassword.length < 4)
             errors.addpassword = 'password should be >=  characters';
-        if (this.state.utilisateurs.filter(utilisateur => utilisateur.username == this.state.addusername)[0])
+        if (this.state.utilisateurs.filter(utilisateur => utilisateur.username === this.state.addusername)[0])
             errors.addusername = 'username already exist';
 
         return errors;
@@ -70,8 +99,8 @@ class Utilisateurs extends React.Component {
 
     }
 
-    checkUser(username){
-        return (username == this.state.addusername);
+    checkUser(username) {
+        return (username === this.state.addusername);
     }
 
     componentDidMount() {
@@ -142,26 +171,28 @@ class Utilisateurs extends React.Component {
                     <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                         <ModalHeader toggle={this.toggleModal}>Ajouter un nouveau utilisateur</ModalHeader>
                         <ModalBody>
-                            <Form onSubmit={this.handleLogin}>
+                            <Form onSubmit={this.addhandleSubmit}>
                                 <FormGroup>
                                     <Label htmlFor="username">Username</Label>
                                     <Input type="text" id="addusername" name="addusername"
-                                        innerRef={(input) => this.username = input} 
+                                        innerRef={(input) => this.username = input}
                                         value={this.state.addusername}
+                                        valid={errors.addusername === '' && this.state.addusername !== ''}
                                         invalid={errors.addusername !== ''}
                                         onBlur={this.addhandleBlur('addusername')}
-                                        onChange={this.addhandleInputChange}/>
-                                        <FormFeedback>{errors.addusername}</FormFeedback>
+                                        onChange={this.addhandleInputChange} />
+                                    <FormFeedback>{errors.addusername}</FormFeedback>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label htmlFor="password">Password</Label>
                                     <Input type="password" id="addpassword" name="addpassword"
-                                        innerRef={(input) => this.password = input} 
+                                        innerRef={(input) => this.password = input}
                                         value={this.state.addpassword}
+                                        valid={errors.addpassword === '' && this.state.addpassword !== ''}
                                         invalid={errors.addpassword !== ''}
                                         onBlur={this.addhandleBlur('addpassword')}
-                                        onChange={this.addhandleInputChange}/>
-                                        <FormFeedback>{errors.addpassword}</FormFeedback>
+                                        onChange={this.addhandleInputChange} />
+                                    <FormFeedback>{errors.addpassword}</FormFeedback>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label htmlFor="addType">Role</Label>
