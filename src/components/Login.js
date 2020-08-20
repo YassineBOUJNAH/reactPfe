@@ -21,7 +21,7 @@ export default class Login extends Component {
         this.handleBlur = this.handleBlur.bind(this);
         this.login = this.login.bind(this);
         this.toggleAlert = this.toggleAlert.bind(this);
-
+        this.fetchCurrentUser = this.fetchCurrentUser.bind(this);
 
     }
 
@@ -36,6 +36,7 @@ export default class Login extends Component {
                 if (jwtToken !== null) {
                     sessionStorage.setItem('jwt', jwtToken);
                     this.setState({isAuthenticated: true});
+                    this.fetchCurrentUser();
                     window.location.reload(false);
                 }
                 else{
@@ -43,6 +44,20 @@ export default class Login extends Component {
                 }
             })
             .catch(err => console.error(err))
+    }
+
+    
+    // Fetch all Users
+    fetchCurrentUser = () => {
+        const token = sessionStorage.getItem('jwt');
+        fetch('http://localhost:8081/Current', {
+            headers: { 'Authorization': token }
+        })
+            .then((response) => response.json())
+            .then((res) => {
+                sessionStorage.setItem('role', res.role);
+          })
+            .catch(err => console.error(err));
     }
 
     toggleAlert(){

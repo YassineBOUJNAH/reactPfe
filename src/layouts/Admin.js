@@ -27,6 +27,8 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
+import routesUser from "routesUser.js";
+
 
 var ps;
 
@@ -36,15 +38,23 @@ class Dashboard extends React.Component {
     this.state = {
       backgroundColor: "black",
       activeColor: "info",
+      routes: <div />,
+      current:{}
     };
     this.mainPanel = React.createRef();
+    this.renderRoute = this.renderRoute.bind(this);
   }
   componentDidMount() {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(this.mainPanel.current);
       document.body.classList.toggle("perfect-scrollbar-on");
+
     }
+    this.renderRoute();
+
   }
+
+
   componentWillUnmount() {
     if (navigator.platform.indexOf("Win") > -1) {
       ps.destroy();
@@ -63,29 +73,86 @@ class Dashboard extends React.Component {
   handleBgClick = (color) => {
     this.setState({ backgroundColor: color });
   };
+
+  //this.fetchCurrentUser();
+  //console.log(this.state.Current)
+
+  renderRoute() {
+
+    const token = sessionStorage.getItem('jwt');
+    fetch('http://localhost:8081/Current', {
+      headers: { 'Authorization': token }
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        sessionStorage.setItem('role', res.role);
+        if (res.role === 'ADMIN') {
+          console.log("admin")
+          this.setState({
+            current : 'ADMIN',
+            routes: <Switch>
+              {routes.map((prop, key) => {
+                return (
+                  <Route
+                    path={prop.layout + prop.path}
+                    component={prop.component}
+                    key={key}
+                  />
+                );
+              })}
+              <Redirect to="/admin/users" />
+            </Switch>
+          })
+        } else {
+          console.log("user")
+          this.setState({
+            current : 'USER',
+            routes: <Switch>
+              {routesUser.map((prop, key) => {
+                return (
+                  <Route
+                    path={prop.layout + prop.path}
+                    component={prop.component}
+                    key={key}
+                  />
+                );
+              })}
+              <Redirect to="/admin/Gestion" />
+            </Switch>
+          })
+
+        }
+
+
+      })
+      .catch(err => console.error(err));
+  }
+
+
+
+
+
+
   render() {
+
+    let router;
+    if(this.state.current === 'ADMIN'){
+      router=routes;
+    }
+    else
+     router=routesUser;
+
     return (
       <div className="wrapper">
         <Sidebar
           {...this.props}
-          routes={routes}
+          routes={router}
           bgColor={this.state.backgroundColor}
           activeColor={this.state.activeColor}
         />
         <div className="main-panel" ref={this.mainPanel}>
           <DemoNavbar {...this.props} />
-          <Switch>
-            {routes.map((prop, key) => {
-              return (
-                <Route
-                  path={prop.layout + prop.path}
-                  component={prop.component}
-                  key={key}
-                />
-              );
-            })}
-            <Redirect to="/admin/users" />
-          </Switch>
+          {this.state.routes}
           <Footer fluid />
         </div>
         <FixedPlugin
