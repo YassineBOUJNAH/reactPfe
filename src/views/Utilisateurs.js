@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Table, Col, Card, CardHeader, CardTitle, CardBody, Button } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, Form, Input,FormGroup,Label,Row, Table, Col, Card, CardHeader, CardTitle, CardBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 
@@ -7,7 +7,13 @@ class Utilisateurs extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { utilisateurs: [] };
+        this.state = { 
+            utilisateurs: [] ,
+            isModalOpen: false
+        };
+
+        this.toggleModal = this.toggleModal.bind(this);
+
     }
 
     componentDidMount() {
@@ -30,6 +36,12 @@ class Utilisateurs extends React.Component {
     }
 
 
+    toggleModal(){
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        });
+    }
+
     render() {
         const tableRows = this.state.utilisateurs.map((utilisateur, index) =>
             <tr key={index}>
@@ -46,8 +58,8 @@ class Utilisateurs extends React.Component {
                             <Card>
                                 <CardHeader>
                                     <CardTitle tag="h4"><Row className="mx-2">Table d'utilisateurs
-                                        <Link className=" ml-auto mr-4" color="secondary">
-                                            <i className="fa fa-plus-square" /><span> ajouter</span>
+                                        <Link onClick={this.toggleModal} className=" ml-auto mr-4" color="secondary">
+                                            <i className="fa fa-plus-square" /><span> Ajouter</span>
                                         </Link></Row>
                                     </CardTitle>
                                 </CardHeader>
@@ -68,6 +80,24 @@ class Utilisateurs extends React.Component {
                             </Card>
                         </Col>
                     </Row>
+                    <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                    <ModalHeader toggle={this.toggleModal}>Ajouter un nouveau utilisateur</ModalHeader>
+                    <ModalBody>
+                        <Form onSubmit={this.handleLogin}>
+                        <FormGroup>
+                                <Label htmlFor="username">Username</Label>
+                                <Input type="text" id="username" name="username"
+                                    innerRef={(input) => this.username = input} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label htmlFor="password">Password</Label>
+                                <Input type="password" id="password" name="password"
+                                    innerRef={(input) => this.password = input}  />
+                            </FormGroup>
+                            <Button type="submit" value="submit" color="primary">Login</Button>
+                        </Form>
+                    </ModalBody>
+                </Modal>
                 </div>
             </>
         );
