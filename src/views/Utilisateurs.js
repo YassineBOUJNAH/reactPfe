@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal, ModalHeader, ModalBody, Form, Input,FormGroup,Label,Row, Table, Col, Card, CardHeader, CardTitle, CardBody } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, FormFeedback,Form, Input, FormGroup, Label, Row, Table, Col, Card, CardHeader, CardTitle, CardBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 
@@ -7,13 +7,71 @@ class Utilisateurs extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { 
-            utilisateurs: [] ,
-            isModalOpen: false
+        this.state = {
+            utilisateurs: [],
+            isModalOpen: false,
+            addusername: '',
+            addpassword: '',
+            addType: 'USER',
+            touched: {
+                addusername: false,
+                addpassword: false,
+                addType: false
+            }
+
         };
 
+        this.addhandleSubmit = this.addhandleSubmit.bind(this);
+        this.addhandleInputChange = this.addhandleInputChange.bind(this);
+        this.addhandleBlur = this.addhandleBlur.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
+        this.checkUser = this.checkUser.bind(this);
 
+    }
+
+    addhandleInputChange(event) {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+
+        this.setState({
+            [name]: value
+        });
+
+    }
+
+    addhandleSubmit(event) {
+        console.log("Current State is:" + JSON.stringify(this.state))
+        alert("Current State is:" + JSON.stringify(this.state))
+        event.preventDefault();
+    }
+
+    addhandleBlur = (field) => (evt) => {
+        this.setState({
+            touched: { ...this.state.touched, [field]: true }
+        });
+    }
+
+    addvalidate(addusername, addpassword) {
+        const errors = {
+            addusername: '',
+            addpassword: '',
+        };
+
+        if (this.state.touched.addusername && addusername.length < 4)
+            errors.addusername = 'Username should be >= 4 characters';
+        if (this.state.touched.addpassword && addpassword.length < 4)
+            errors.addpassword = 'password should be >=  characters';
+        if (this.state.utilisateurs.filter(utilisateur => utilisateur.username == this.state.addusername)[0])
+            errors.addusername = 'username already exist';
+
+        return errors;
+
+
+    }
+
+    checkUser(username){
+        return (username == this.state.addusername);
     }
 
     componentDidMount() {
@@ -36,13 +94,14 @@ class Utilisateurs extends React.Component {
     }
 
 
-    toggleModal(){
+    toggleModal() {
         this.setState({
             isModalOpen: !this.state.isModalOpen
         });
     }
 
     render() {
+        const errors = this.addvalidate(this.state.addusername, this.state.addpassword);
         const tableRows = this.state.utilisateurs.map((utilisateur, index) =>
             <tr key={index}>
                 <td>{utilisateur.username}</td>
@@ -81,23 +140,42 @@ class Utilisateurs extends React.Component {
                         </Col>
                     </Row>
                     <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
-                    <ModalHeader toggle={this.toggleModal}>Ajouter un nouveau utilisateur</ModalHeader>
-                    <ModalBody>
-                        <Form onSubmit={this.handleLogin}>
-                        <FormGroup>
-                                <Label htmlFor="username">Username</Label>
-                                <Input type="text" id="username" name="username"
-                                    innerRef={(input) => this.username = input} />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label htmlFor="password">Password</Label>
-                                <Input type="password" id="password" name="password"
-                                    innerRef={(input) => this.password = input}  />
-                            </FormGroup>
-                            <Button type="submit" value="submit" color="primary">Login</Button>
-                        </Form>
-                    </ModalBody>
-                </Modal>
+                        <ModalHeader toggle={this.toggleModal}>Ajouter un nouveau utilisateur</ModalHeader>
+                        <ModalBody>
+                            <Form onSubmit={this.handleLogin}>
+                                <FormGroup>
+                                    <Label htmlFor="username">Username</Label>
+                                    <Input type="text" id="addusername" name="addusername"
+                                        innerRef={(input) => this.username = input} 
+                                        value={this.state.addusername}
+                                        invalid={errors.addusername !== ''}
+                                        onBlur={this.addhandleBlur('addusername')}
+                                        onChange={this.addhandleInputChange}/>
+                                        <FormFeedback>{errors.addusername}</FormFeedback>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label htmlFor="password">Password</Label>
+                                    <Input type="password" id="addpassword" name="addpassword"
+                                        innerRef={(input) => this.password = input} 
+                                        value={this.state.addpassword}
+                                        invalid={errors.addpassword !== ''}
+                                        onBlur={this.addhandleBlur('addpassword')}
+                                        onChange={this.addhandleInputChange}/>
+                                        <FormFeedback>{errors.addpassword}</FormFeedback>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label htmlFor="addType">Role</Label>
+                                    <Input type="select" name="addType"
+                                        value={this.state.addType}
+                                        onChange={this.addhandleInputChange}>
+                                        <option>USER</option>
+                                        <option>ADMIN</option>
+                                    </Input>
+                                </FormGroup>
+                                <Button type="submit" value="submit" color="primary">Ajouter</Button>
+                            </Form>
+                        </ModalBody>
+                    </Modal>
                 </div>
             </>
         );
