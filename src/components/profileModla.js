@@ -19,8 +19,9 @@ class profileModal extends React.Component {
     }
 
     render() {
-        return (
+        console.log(this.props.selectedUser);
 
+        return (
             <Modal size="lg" isOpen={this.props.isModalOpen} toggle={this.props.toggle}>
                 <ModalHeader toggle={this.props.toggle}>
 
@@ -49,7 +50,7 @@ class profileModal extends React.Component {
                                         <FormGroup>
                                             <label>Username</label>
                                             <Input
-                                                defaultValue=""
+                                                defaultValue={this.props.selectedUser ? this.props.selectedUser.username : null}
                                                 placeholder="Username"
                                                 type="text"
                                             />

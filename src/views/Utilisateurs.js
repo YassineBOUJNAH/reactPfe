@@ -14,7 +14,8 @@ class Utilisateurs extends React.Component {
             isProfilModalOpen: false,
             addusername: '',
             addpassword: '',
-            addType: 'USER',
+            addType: 'CLIENT',
+            selectedUser: null,
             touched: {
                 addusername: false,
                 addpassword: false,
@@ -132,9 +133,10 @@ class Utilisateurs extends React.Component {
         });
     }
 
-    profiletoggleModal(){
+    profiletoggleModal(utilisateur){
         this.setState({
-            isProfilModalOpen: !this.state.isProfilModalOpen
+            isProfilModalOpen: !this.state.isProfilModalOpen,
+            selectedUser: utilisateur
         });
     }
 
@@ -144,7 +146,7 @@ class Utilisateurs extends React.Component {
             <tr key={index}>
                 <td>{utilisateur.username}</td>
                 <td>{utilisateur.role}</td>
-                <td className="text-right"><Button onClick={this.profiletoggleModal} color="secondary">Voir Profile</Button></td>
+                <td className="text-right"><Button onClick={() => this.profiletoggleModal(utilisateur)} color="secondary">Voir Profile</Button></td>
             </tr>);
 
         return (
@@ -177,7 +179,7 @@ class Utilisateurs extends React.Component {
                             </Card>
                         </Col>
                     </Row>
-                    <ProfileModale isModalOpen={this.state.isProfilModalOpen} toggle={this.profiletoggleModal}/>
+                    <ProfileModale selectedUser={this.state.selectedUser} isModalOpen={this.state.isProfilModalOpen} toggle={this.profiletoggleModal}/>
                     <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                         <ModalHeader toggle={this.toggleModal}>Ajouter un nouveau utilisateur</ModalHeader>
                         <ModalBody>
