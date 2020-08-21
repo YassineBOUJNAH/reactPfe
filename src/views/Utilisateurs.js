@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, FormFeedback, Form, Input, FormGroup, Label, Row, Table, Col, Card, CardHeader, CardTitle, CardBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import ProfileModale from '../components/profileModla';
 
 
 class Utilisateurs extends React.Component {
@@ -10,6 +11,7 @@ class Utilisateurs extends React.Component {
         this.state = {
             utilisateurs: [],
             isModalOpen: false,
+            isProfilModalOpen: false,
             addusername: '',
             addpassword: '',
             addType: 'USER',
@@ -27,6 +29,7 @@ class Utilisateurs extends React.Component {
         this.toggleModal = this.toggleModal.bind(this);
         this.checkUser = this.checkUser.bind(this);
         this.addUser = this.addUser.bind(this);
+        this.profiletoggleModal = this.profiletoggleModal.bind(this);
 
     }
 
@@ -129,13 +132,19 @@ class Utilisateurs extends React.Component {
         });
     }
 
+    profiletoggleModal(){
+        this.setState({
+            isProfilModalOpen: !this.state.isProfilModalOpen
+        });
+    }
+
     render() {
         const errors = this.addvalidate(this.state.addusername, this.state.addpassword);
         const tableRows = this.state.utilisateurs.map((utilisateur, index) =>
             <tr key={index}>
                 <td>{utilisateur.username}</td>
                 <td>{utilisateur.role}</td>
-                <td className="text-right"><Button color="secondary">Voir Profile</Button></td>
+                <td className="text-right"><Button onClick={this.profiletoggleModal} color="secondary">Voir Profile</Button></td>
             </tr>);
 
         return (
@@ -168,6 +177,7 @@ class Utilisateurs extends React.Component {
                             </Card>
                         </Col>
                     </Row>
+                    <ProfileModale isModalOpen={this.state.isProfilModalOpen} toggle={this.profiletoggleModal}/>
                     <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                         <ModalHeader toggle={this.toggleModal}>Ajouter un nouveau utilisateur</ModalHeader>
                         <ModalBody>
@@ -199,7 +209,7 @@ class Utilisateurs extends React.Component {
                                     <Input type="select" name="addType"
                                         value={this.state.addType}
                                         onChange={this.addhandleInputChange}>
-                                        <option>USER</option>
+                                        <option>CLIENT</option>
                                         <option>ADMIN</option>
                                     </Input>
                                 </FormGroup>

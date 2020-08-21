@@ -27,7 +27,7 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
-import routesUser from "routesUser.js";
+import routesClient from "routesClient.js";
 
 
 var ps;
@@ -106,9 +106,9 @@ class Dashboard extends React.Component {
         } else {
           console.log("user")
           this.setState({
-            current : 'USER',
+            current : 'CLIENT',
             routes: <Switch>
-              {routesUser.map((prop, key) => {
+              {routesClient.map((prop, key) => {
                 return (
                   <Route
                     path={prop.layout + prop.path}
@@ -135,7 +135,7 @@ class Dashboard extends React.Component {
       router=routes;
     }
     else
-     router=routesUser;
+     router=routesClient;
 
     return (
       <div className="wrapper">
