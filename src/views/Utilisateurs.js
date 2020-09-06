@@ -86,18 +86,20 @@ class Utilisateurs extends React.Component {
     }
 
     addvalidate(addusername, addpassword) {
+
         const errors = {
             addusername: '',
             addpassword: '',
         };
 
+        if(this.state.utilisateurs){
         if (this.state.touched.addusername && addusername.length < 4)
             errors.addusername = 'Username should be >= 4 characters';
         if (this.state.touched.addpassword && addpassword.length < 4)
             errors.addpassword = 'password should be >=  characters';
         if (this.state.utilisateurs.filter(utilisateur => utilisateur.username === this.state.addusername)[0])
             errors.addusername = 'username already exist';
-
+        }
         return errors;
 
 
@@ -142,12 +144,16 @@ class Utilisateurs extends React.Component {
 
     render() {
         const errors = this.addvalidate(this.state.addusername, this.state.addpassword);
-        const tableRows = this.state.utilisateurs.map((utilisateur, index) =>
+        let tableRows = <div></div>
+        if(this.state.utilisateurs){
+        tableRows = this.state.utilisateurs.map((utilisateur, index) =>
             <tr key={index}>
                 <td>{utilisateur.username}</td>
                 <td>{utilisateur.role}</td>
                 <td className="text-right"><Button onClick={() => this.profiletoggleModal(utilisateur)} color="secondary">Voir Profile</Button></td>
             </tr>);
+        }
+        
 
         return (
             <>
