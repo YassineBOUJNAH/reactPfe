@@ -26,7 +26,20 @@ import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js";
 
 var routes = [
-
+  {
+    path: "/gestion",
+    name: "df",
+    icon: "nc-icon nc-bank",
+    component: Dashboard,
+    layout: "/admin",
+  },
+  {
+    path: "/gestion",
+    name: "Gestion",
+    icon: "nc-icon nc-bank",
+    component: Dashboard,
+    layout: "/admin",
+  },
   {
     path: "/gestion",
     name: "Gestion",
