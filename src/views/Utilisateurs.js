@@ -116,13 +116,13 @@ class Utilisateurs extends React.Component {
     // Fetch all Users
     fetchUsers = () => {
         const token = sessionStorage.getItem('jwt');
-        fetch('http://localhost:8081/api/utilisateurs', {
+        fetch('http://localhost:8081/users', {
             headers: { 'Authorization': token }
         })
             .then((response) => response.json())
             .then((responseData) => {
                 this.setState({
-                    utilisateurs: responseData._embedded.utilisateurs,
+                    utilisateurs: responseData,
                 });
             })
             .catch(err => console.error(err));

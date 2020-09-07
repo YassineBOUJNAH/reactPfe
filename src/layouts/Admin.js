@@ -27,7 +27,9 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
-import routesClient from "routesClient.js";
+import routesSupervisor from "routesSupervisor.js";
+import routesStudent from "routesStudent.js";
+
 
 
 var ps;
@@ -103,12 +105,32 @@ class Dashboard extends React.Component {
               <Redirect to="/admin/users" />
             </Switch>
           })
-        } else {
-          console.log("user")
+        } 
+        else if (res.role === 'STUDENT') {
+          console.log("STUDENT")
           this.setState({
-            current : 'CLIENT',
+            current : 'STUDENT',
             routes: <Switch>
-              {routesClient.map((prop, key) => {
+              {routesStudent.map((prop, key) => {
+                return (
+                  <Route
+                    path={prop.layout + prop.path}
+                    component={prop.component}
+                    key={key}
+                  />
+                );
+              })}
+              <Redirect to="/admin/typography" />
+            </Switch>
+          })
+        } 
+        
+        else {
+          console.log("supervisor")
+          this.setState({
+            current : 'SUPERVISOR',
+            routes: <Switch>
+              {routesSupervisor.map((prop, key) => {
                 return (
                   <Route
                     path={prop.layout + prop.path}
@@ -134,8 +156,10 @@ class Dashboard extends React.Component {
     if(this.state.current === 'ADMIN'){
       router=routes;
     }
+    else if(this.state.current === 'STUDENT'){
+     router=routesStudent;}
     else
-     router=routesClient;
+     router=routesSupervisor;
 
     return (
       <div className="wrapper">
