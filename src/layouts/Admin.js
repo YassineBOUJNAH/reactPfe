@@ -40,7 +40,7 @@ class Dashboard extends React.Component {
     this.state = {
       backgroundColor: "black",
       activeColor: "info",
-      routes: <div />,
+      routes: <div/>,
       current:{}
     };
     this.mainPanel = React.createRef();
@@ -77,7 +77,7 @@ class Dashboard extends React.Component {
   };
 
   //this.fetchCurrentUser();
-  //console.log(this.state.Current)
+  //console.log(this.state.Current) 
 
   renderRoute() {
 
@@ -139,8 +139,8 @@ class Dashboard extends React.Component {
                   />
                 );
               })}
-              <Redirect to="/admin/Gestion" />
-            </Switch>
+              <Redirect to="supervisor/students" />
+            </Switch> 
           })
 
         }
@@ -152,8 +152,8 @@ class Dashboard extends React.Component {
 
   render() {
 
-    let router;
-    if(this.state.current === 'ADMIN'){
+    let router; 
+    if(this.state.current === 'ADMIN'){ 
       router=routes;
     }
     else if(this.state.current === 'STUDENT'){

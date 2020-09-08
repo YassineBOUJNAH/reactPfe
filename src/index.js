@@ -45,8 +45,7 @@ const ProtectedComponent = () => {
   }
   return (<Router history={hist}>
           <Switch>
-            <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-            <Redirect to="/admin/users" />
+            <Route render={(props) => <AdminLayout {...props} />} />  
           </Switch>
   </Router>)
 }

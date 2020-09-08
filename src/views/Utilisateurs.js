@@ -131,7 +131,7 @@ class Utilisateurs extends React.Component {
 
     toggleModal() {
         this.setState({
-            isModalOpen: !this.state.isModalOpen
+            isModalOpen: !this.state.isModalOpen 
         });
     }
 
