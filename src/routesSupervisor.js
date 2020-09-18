@@ -7,14 +7,14 @@ import TableList from "views/Tables.js";
 import Maps from "views/Map.js";
 import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js"; 
-import Students from "views/supervisorViews/students" ; 
+import Internships from "views/supervisorViews/internships" ; 
 
 var routes = [
   {
     path: "/students",
     name: "Students",
     icon: " nc-icon nc-single-02",
-    component: Students,
+    component: Internships,
     layout: "/supervisor",
   },
   {

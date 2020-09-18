@@ -87,7 +87,9 @@ class Dashboard extends React.Component {
     })
       .then((response) => response.json())
       .then((res) => {
-        sessionStorage.setItem('role', res.role);
+        sessionStorage.setItem('role',res.role);  
+        sessionStorage.setItem('currentuser',JSON.stringify(res));
+        
         if (res.role === 'ADMIN') {
           console.log("admin")
           this.setState({
@@ -139,7 +141,7 @@ class Dashboard extends React.Component {
                   />
                 );
               })}
-              <Redirect to="supervisor/students" />
+              <Redirect to="supervisor/internships" />
             </Switch> 
           })
 

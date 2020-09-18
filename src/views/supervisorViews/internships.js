@@ -4,12 +4,12 @@ import { Button, Modal, ModalHeader, ModalBody, FormFeedback, Form, Input, FormG
 
 
 
-class Students extends React.Component { 
+class Internships extends React.Component { 
 
     constructor(props) {
         super(props);
         this.state = {
-            utilisateurs: [],
+            internships: [],
             isModalOpen: false,
             isProfilModalOpen: false,
             addusername: '',
@@ -27,6 +27,34 @@ class Students extends React.Component {
         this.addhandleInputChange = this.addhandleInputChange.bind(this); 
         this.toggleModal = this.toggleModal.bind(this);
     }  
+     //Making an API Call 
+   
+
+      componentDidMount() { 
+          const token  = sessionStorage.getItem('jwt');  
+          const currentuser =  JSON.parse(sessionStorage.getItem('currentuser')); 
+            
+        fetch("http://localhost:8081/supervisor/"+currentuser.id+"/internships", {
+          headers: { 'Authorization': token }
+        })
+          .then(res => res.json())
+          .then(
+            (data) => { 
+              console.log(data); 
+              this.setState({
+                internships : data 
+              });
+            },
+           
+            (error) => {
+                 
+            }
+          ) 
+          
+      } 
+ 
+
+  
 
     
     addhandleBlur = (field) => (evt) => {
@@ -81,34 +109,42 @@ class Students extends React.Component {
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle tag="h4">Students </CardTitle>
+                  <CardTitle tag="h4">Internships</CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Table responsive>
                     <thead className="text-primary">
                       <tr>
                         <th>Id</th>
-                        <th>name</th>
-                        <th>last name</th>
-                        <th>CNE</th>  
-                        <th>Intership details</th>  
-                        <th>Demand a meeting</th> 
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Start date</th>  
+                        <th>End date</th>  
+                        <th>Entreprise</th> 
 
                       </tr>
                     </thead>
                     <tbody> 
 
 
+          {  
+           this.state.internships.map((internship) =>  
+             
+             <tr>
+              <td>{internship.id}</td>
+              <td>{internship.title}</td>
+              <td>{internship.description}</td>
+              <td>{internship.startdate}</td>   
+              <td>{internship.lasttdate}</td>   
+              <td>{internship.entreprise}</td>
 
-                      <tr>
-                        <td>Dakota Rice</td>
-                        <td>Niger</td>
-                        <td>Oud-Turnhout</td>
-                        <td>$36,738</td>  
-                        <td> <Button1 name ="Internship" onclick = {this.toggleModal}/></td>  
-                        <td> <Button1 name ="demand" /> </td> 
-                       
-                      </tr>
+             <td> <Button1 name ="Student" onclick = {this.toggleModal}/></td>  
+             
+             </tr>
+            
+            
+            )}
+                     
                      
                     
                     </tbody>
@@ -164,4 +200,4 @@ class Students extends React.Component {
   }
 }
 
-export default Students ;
+export default Internships ;
