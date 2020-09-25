@@ -3,9 +3,11 @@ import './button.scss' ;
 
 function Button1(props) {
     return (
-       <div className="container_but">
-       <a onClick={props.onclick} class="button">{props.name}</a>
-      </div>  
+     <div className="btn1">
+       <button onClick={props.onclick} >{props.name}</button> 
+
+      </div> 
+      
     )
 }
 
