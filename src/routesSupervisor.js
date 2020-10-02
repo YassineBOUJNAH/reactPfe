@@ -8,7 +8,8 @@ import Maps from "views/Map.js";
 import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js"; 
 import Internships from "views/supervisorViews/internships" ;  
-import Meetings from 'views/supervisorViews/meetings' ; 
+import Meetings from 'views/supervisorViews/meetings' ;  
+import Post from 'views/supervisorViews/post'
 
 var routes = [
   {
@@ -29,7 +30,7 @@ var routes = [
     path: "/posts",
     name: "Posts",
     icon: "nc-icon nc-bullet-list-67",
-    component: UserPage,
+    component: Post ,
     layout: "/supervisor",
   } ,
   {

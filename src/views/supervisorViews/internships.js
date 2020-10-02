@@ -334,21 +334,7 @@ class Internships extends React.Component {
         
            
               
-      {/*       <Modal isOpen = {this.state.isStudentModalOpen} toggle={this.toggleModalS}>  
-                     <ModalHeader toggle={this.toggleModalS}>Student details</ModalHeader> 
-                          <ModalBody> 
-                             <div className="modaldiv">  
-                             
-                               <div> <p>Firstname</p> <div className="value">{internship.student["frstname"]}</div> </div>
-                               <div> <p>Lastname</p> <div className="value"> {internship.student["lastname"]}</div> </div>
-                               <div> <p>Email</p> <div className="value"> {internship.student["email"]}</div> </div>
-                               <div> <p>CNE</p> <div className="value"> {internship.student["cne"]}</div> </div>
-                             </div>   
-                          </ModalBody> 
-                         <ModalFooter> 
-                             <Button variant="secondary" onClick={this.toggleModalS}>Close</Button>
-                         </ModalFooter>     
-          </Modal>   */}
+     
 
              </tr>
             

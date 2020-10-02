@@ -38,8 +38,6 @@ class Meetings extends React.Component {
     
         };   
 
-        
-
         this.addhandleBlur = this.addhandleBlur.bind(this); 
         this.addhandleInputChange = this.addhandleInputChange.bind(this);  
         this.addhandleSubmit = this. addhandleSubmit.bind(this);                       
@@ -465,7 +463,7 @@ class Meetings extends React.Component {
                         <ModalFooter>
                         <Button color="primary" onClick = {(e) => this. cancelMeeting(this.state.selectedinternship)} >Yes , just do it</Button>{' '}
                         <Button color="secondary" onClick = {this.toggleCancelMeetingModal}>No</Button>
-                 </ModalFooter>
+                    </ModalFooter>
                     </Modal>
                      
                      {studentcomp} 
