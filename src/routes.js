@@ -25,13 +25,21 @@ import Maps from "views/Map.js";
 import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js";
 import Utilisateurs from 'views/Utilisateurs.js'
+import UsersManagement from 'views/UsersManagement'
 
 var routes = [
+  // {
+  //   path: "/users",
+  //   name: "Utilisateurs",
+  //   icon: "nc-icon nc-single-02",
+  //   component: Utilisateurs,
+  //   layout: "/admin",
+  // }, 
   {
     path: "/users",
     name: "Utilisateurs",
     icon: "nc-icon nc-single-02",
-    component: Utilisateurs,
+    component: UsersManagement,
     layout: "/admin",
   },
   {

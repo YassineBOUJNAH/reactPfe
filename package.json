@@ -19,6 +19,8 @@
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
+    "react-table": "6.8.2",
+    "react-toastify": "6.0.8",
     "reactstrap": "8.4.1",
     "start": "^5.1.0"
   },
