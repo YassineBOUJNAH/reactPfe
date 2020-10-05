@@ -84,6 +84,9 @@ class IntershipsOffers extends React.Component {
     }
 
     RenderIntershipOfferItem(intershipOffer) {
+        const startDate = intershipOffer.startdate;
+        const endDate = intershipOffer.lasttdate;
+
         return (
             <div className="col-11 col-md-5 m-3">
                 <FadeTransform
@@ -107,7 +110,7 @@ class IntershipsOffers extends React.Component {
                                 });
                             }} color="danger" className="col-12 col-md-5">Refuse</Button>
                         </CardBody>
-                        <CardFooter className="text-muted">{intershipOffer.entreprise}</CardFooter>
+                        <CardFooter className="text-muted"><div>start: {startDate.substring(0, 10)} end: {endDate.substring(0, 10)}</div>{intershipOffer.entreprise} </CardFooter>
                     </Card>
                 </FadeTransform>
             </div>
