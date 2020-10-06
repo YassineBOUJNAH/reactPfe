@@ -46,6 +46,7 @@ class IntershipsOffers extends React.Component {
         this.toggle = this.toggle.bind(this);
         this.addhandleInputChange = this.addhandleInputChange.bind(this);
         this.addhandleAccepteSubmit = this.addhandleAccepteSubmit.bind(this);
+        this.addhandleSubmit= this.addhandleSubmit.bind(this);
         this.fetchSupervisors = this.fetchSupervisors.bind(this);
         this.fetchStudents = this.fetchStudents.bind(this);
 
@@ -197,8 +198,6 @@ class IntershipsOffers extends React.Component {
                 },
                 body: JSON.stringify(internshipOffer)
             }).then(res => {
-                this.fetchintershipOffers();
-                this.notify("tc", "success", "intership offer has been Accepted");
                 const affetedSupervisor = this.state.supervisors.filter(supervisor => supervisor.username === Affectedsupervisor)[0]
                 const affetedStudent = this.state.students.filter(student => student.username === intershipOffer.studentUsername)[0]
                 const intership = {
@@ -218,7 +217,11 @@ class IntershipsOffers extends React.Component {
                             'Authorization': token,
                         },
                         body: JSON.stringify(intership)
-                    }).then(res => {console.log(intership)})          
+                    }).then(res => {console.log(intership);
+                        this.notify("tc", "success", "intership offer has been Accepted");
+                        this.fetchintershipOffers();
+
+                    })          
                       .catch(err => console.log(err)
                     )
             }
@@ -352,6 +355,7 @@ class IntershipsOffers extends React.Component {
                                 <Input type="select" id="selectedSupervisor" name="selectedSupervisor"
                                     value={this.state.selectedSupervisor}
                                     onChange={this.addhandleInputChange} >
+                                    <option></option>
                                     {supervisorsList}
                                 </Input>
                             </FormGroup>
