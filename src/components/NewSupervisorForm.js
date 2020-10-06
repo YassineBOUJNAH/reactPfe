@@ -203,7 +203,7 @@ class NewSupervisorForm extends React.Component {
                                     onChange={this.addhandleInputChange} />
                             </FormGroup>
                             <FormGroup>
-                                <Label htmlFor="sexe">Sexe</Label>
+                                <Label htmlFor="sexe">Sex</Label>
                                 <Input type="select" id="sexe" name="sexe"
                                     value={this.state.sexe}
                                     onChange={this.addhandleInputChange} >
