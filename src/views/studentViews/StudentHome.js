@@ -1,6 +1,8 @@
 
 import React, {useState, useEffect} from "react";
 import InternshipOffers from "views/studentViews/InternshipOffers.js"
+import StudentMeetings from "./StudentMeetings.js"
+
 
 // reactstrap components
 import {
@@ -33,13 +35,13 @@ const User = () => {
   const fetchSupervisor = async () => {
     console.log("feeetch !!");
     const response = await fetch(
-      "http://localhost:8081/users", {
+      "http://localhost:8081/internships/student/"+currentuser.id, {
         headers: { 'Authorization': token }
       }
     );
     const data = await response.json();
     setSupervisor(data);
-    console.log("test"+data);
+    console.log("sup: "+data);
   };
 
   const fetchInternshipOffers = async () => {
@@ -75,13 +77,12 @@ const User = () => {
                         className="avatar border-gray"
                         src={require("assets/img/mike.jpg")}
                       />
-                      <h5 className="title">Chet Faker</h5>
+                      <h5 className="title">{currentuser.username}</h5>
                     </a>
-                    <p className="description">@chetfaker</p>
+                    <p className="description">{currentuser.email}</p>
                   </div>
                   <p className="description text-center">
-                    "I like the way you work it <br />
-                    No diggity <br />I wanna bag it up"
+                  {currentuser.frstname} {currentuser.username}
                   </p>
                 </CardBody>
                 <CardFooter>
@@ -90,7 +91,7 @@ const User = () => {
                     <Row>
                       <Col className="ml-auto" lg="3" md="6" xs="6">
                         <h5>
-                          12 <br />
+                          {internshipOffers.length} <br />
                           <small>Offers</small>
                         </h5>
                       </Col>
@@ -111,12 +112,11 @@ const User = () => {
                 </CardFooter>
               </Card>
               <Card>
-                <CardHeader>
-                  <CardTitle tag="h4">My Meetings</CardTitle>
-                </CardHeader>
                 <CardBody>
-                <p class="description text-center">Great, no meeting in the coming days!</p>
-                <button type="submit" class="btn-round btn btn-primary">Show all</button>
+                <StudentMeetings></StudentMeetings>
+                <button type="submit" class="btn-round btn btn-primary">
+                    Show all
+                </button>
                 </CardBody>
               </Card>
               <Card>
@@ -138,9 +138,9 @@ const User = () => {
                           </div>
                         </Col>
                         <Col md="7" xs="7">
-                        {sup.username} <br />
+                        {sup.supervisor.username} <br />
                           <span className="text-muted">
-                            <small>{sup.email}</small>
+                            <small>{sup.supervisor.email}</small>
                           </span>
                         </Col>
                         <Col className="text-right" md="3" xs="3">

@@ -8,6 +8,7 @@ import UserPage from "views/User.js";
 import InternshipOffers from "views/studentViews/InternshipOffers.js"
 import StudentHome from "views/studentViews/StudentHome.js"
 import StudentPosts from "views/studentViews/StudentPosts.js"
+import StudentMeetings from "views/studentViews/StudentMeetings.js"
 import UpgradeToPro from "views/Upgrade.js";
 
 var routesStudent = [{
@@ -28,7 +29,7 @@ var routesStudent = [{
         path: "/mymeetings",
         name: "MyMeetings",
         icon: "nc-icon nc-caps-small",
-        component: StudentHome,
+        component: StudentMeetings,
         layout: "/student",
     },
     {
