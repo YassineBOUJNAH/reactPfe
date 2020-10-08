@@ -9,7 +9,7 @@ import { Form, Row, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, Moda
 
 
 const User = () => {
-    const [supervisor, setSupervisor] = useState([]);
+    const [supervisor, setSupervisor] = useState('');
     const [internshipOffers, setInternshipOffers] = useState([]);
     const [post, setPost] = useState([]);
     const PORT = "8081";
@@ -22,7 +22,27 @@ const User = () => {
         fetchInternshipOffers();
         fetchPost();
     }, []);
-
+/*
+    const fetchSupervisor = async () => {
+        console.log("feeetch !!");
+        const response = await fetch(
+            "http://localhost:8081/internships/student/" + currentuser.id, {
+            headers: { 'Authorization': token }
+        })
+          .then(res => res.json())
+          .then(
+            (data) => {
+              console.log("internship dta: "+data+" id: "+currentuser.id);
+              console.log(data);
+              setSupervisor(data);
+              fetchPost();
+            console.log("sup: " + data[0].supervisor.id);
+            },
+            (error) => {
+                console.error(error);
+            }
+          )};
+    */
     const fetchSupervisor = async () => {
         console.log("feeetch !!");
         const response = await fetch(
@@ -31,9 +51,11 @@ const User = () => {
         }
         );
         const data = await response.json();
-        setSupervisor(data);
-        console.log("sup: " + data);
+        setSupervisor(data[0].supervisor.id);
+        fetchPost();
+        console.log("sup: " + data[0].supervisor.id);
     };
+    
 
     const fetchInternshipOffers = async () => {
         console.log("feeetch !!");
@@ -52,10 +74,12 @@ const User = () => {
         console.log("feeetch posts !!");
         console.log(currentuser.id + " user id");
 
-        const supID = supervisor.map((sup) => (sup.supervisor.id));
-        console.log(supID + "sup id");
+        //const supID = supervisor[0].id;
+        console.log(supervisor + "sup id");
+        console.log(supervisor);
+        //const supID = supervisor[0].supervisor.id;
         const response = await fetch(
-            "http://localhost:8081/supervisors/6/posts", {
+            "http://localhost:8081/supervisors/"+supervisor+"/posts", {
             headers: { 'Authorization': token }
         }
         );
@@ -68,6 +92,7 @@ const User = () => {
         <>
             <div className="content">
                 <Row>
+                    <h1>Posts by your supervisor</h1>
                     {post.map((post) =>
                         <Card className="card_post">
                             <CardBody>

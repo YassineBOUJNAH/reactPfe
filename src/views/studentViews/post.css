@@ -1,0 +1,65 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@1,700&display=swap');
+
+.description { 
+    width: 500px;  
+
+}  
+.form_addpost { 
+    
+    margin-left: 225px;
+}
+ 
+.note { 
+    font-family: 'Poppins', sans-serif;
+} 
+
+@media only screen and (max-width: 1024px) {
+    
+    .form_addpost { 
+    
+        margin-left: 2px;
+    } 
+    .description { 
+        width: 300px;  
+    
+    }   
+    .card_post{ 
+        width: 300px; 
+        height: 200px;
+   }  
+ 
+  
+     
+} 
+.card_post{ 
+     width: 90vw ;
+}  
+@media only screen and (min-width: 1024px) {
+    
+   
+    .card_post{ 
+        width: 600px;
+   }  
+
+
+     
+}  
+
+.post_actions { 
+    right: 3px  ; 
+    bottom: 0;
+    position: absolute ;
+}
+  
+
+ 
+.cardtitle{ 
+    font-size: 30px;
+} 
+
+.cardtext { 
+    font-family: 'Arimo', sans-serif;
+} 
+

@@ -7,8 +7,9 @@ import Maps from "views/Map.js";
 import UserPage from "views/User.js";
 import InternshipOffers from "views/studentViews/InternshipOffers.js"
 import StudentHome from "views/studentViews/StudentHome.js"
-import StudentPosts from "views/studentViews/StudentPosts.js"
+import StudentPostssss from "views/studentViews/StudentPostssss.js"
 import StudentMeetings from "views/studentViews/StudentMeetings.js"
+import StudentReport from "views/studentViews/StudentReport.js"
 import UpgradeToPro from "views/Upgrade.js";
 
 var routesStudent = [{
@@ -19,13 +20,6 @@ var routesStudent = [{
         layout: "/student",
     },
     {
-        path: "/myoffers",
-        name: "MyOffers",
-        icon: "nc-icon nc-caps-small",
-        component: InternshipOffers,
-        layout: "/student",
-    },
-    {
         path: "/mymeetings",
         name: "MyMeetings",
         icon: "nc-icon nc-caps-small",
@@ -33,19 +27,18 @@ var routesStudent = [{
         layout: "/student",
     },
     {
-        path: "/myposts",
-        name: "MyPosts",
+        path: "/myreports",
+        name: "MyReports",
         icon: "nc-icon nc-caps-small",
-        component: StudentPosts,
+        component: StudentReport,
         layout: "/student",
     },
     {
-        pro: true,
-        path: "/upgrade",
-        name: "Upgrade to PRO",
-        icon: "nc-icon nc-spaceship",
-        component: UpgradeToPro,
-        layout: "/admin",
+        path: "/myposts",
+        name: "Posts",
+        icon: "nc-icon nc-caps-small",
+        component: StudentPostssss,
+        layout: "/student",
     },
 ];
 export default routesStudent;

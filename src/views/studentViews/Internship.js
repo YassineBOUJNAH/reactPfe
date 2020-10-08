@@ -23,7 +23,7 @@ import {
   ModalFooter,
 } from "reactstrap";
 
-const InternshipOffers = ({ internshipOffers, internship }, props) => {
+const Internship = ({ internship }, props) => {
   const {
     buttonLabel,
     className
@@ -31,25 +31,6 @@ const InternshipOffers = ({ internshipOffers, internship }, props) => {
 
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
-  
-
-  const deleteInternshipOffer = (id) => {
-    const token = sessionStorage.getItem('jwt');
-    fetch("http://localhost:8081/internshipoffers/delete/" + id, {
-      headers: { 'Authorization': token },
-      method: 'DELETE'
-    }).then((response) => {
-      if (response.status >= 200 && response.status <= 299) {
-        console.log("deleeeeeeeeeeeeetd id: "+id);
-        alert('internship offer deleted '+id);
-      } else {
-        throw "Something went wrong , error status : " + response.status;
-      }
-    })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
 
   return (
     <>
@@ -58,8 +39,7 @@ const InternshipOffers = ({ internshipOffers, internship }, props) => {
           <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">My Internship offers</CardTitle>
-                <button disabled={internship.length >= 1} type="submit" class="btn-round btn btn-primary" onClick={toggle}>Add offer</button>
+                <CardTitle tag="h4">My active Internship</CardTitle>
               </CardHeader>
               <CardBody>
                 <Table responsive>
@@ -69,21 +49,15 @@ const InternshipOffers = ({ internshipOffers, internship }, props) => {
                       <th>Entreprise</th>
                       <th>Description</th>
                       <th className="text-right">State</th>
-                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {internshipOffers.map((internOffer) => (
-                      <tr key={internOffer.id}>
+                    {internship.map((internOffer) => (
+                      <tr>
                         <td>{internOffer.title}</td>
                         <td>{internOffer.entreprise}</td>
                         <td>{internOffer.description}</td>
-                        <td style={internOffer.state == "accepted" ? { color: 'green' } : { color: 'red' }}>{internOffer.state}</td>
-                        <td className="text-right">
-                          <button className="btn btn-danger" onClick={() => deleteInternshipOffer(internOffer.id)}>
-                            Delete
-                          </button>
-                        </td>
+                        <td className="text-right">{internOffer.state}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -92,17 +66,17 @@ const InternshipOffers = ({ internshipOffers, internship }, props) => {
             </Card>
           </Col>
         </Row>
-
+        
         {/* Form to add an offer*/}
         <Modal isOpen={modal} toggle={toggle} className={className}>
           <ModalHeader toggle={toggle}>Add internship offer</ModalHeader>
           <ModalBody>
             <InternshipOfferForm></InternshipOfferForm>
-          </ModalBody>
+        </ModalBody>
         </Modal>
       </div>
     </>
   );
 }
 
-export default InternshipOffers;
+export default Internship;

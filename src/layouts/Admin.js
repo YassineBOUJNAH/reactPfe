@@ -122,7 +122,7 @@ class Dashboard extends React.Component {
                   />
                 );
               })}
-              <Redirect to="/admin/typography" />
+              <Redirect to="/student/home" />
             </Switch>
           })
         } 

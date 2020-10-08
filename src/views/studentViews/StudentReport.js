@@ -13,18 +13,18 @@ import NotificationAlert from "react-notification-alert";
 
 
 
-export default class post extends Component {
+export default class report extends Component {
 
   constructor(props) {
     super(props)
 
     this.state = {
       internship: '',
-      posts: [],
+      reports: [],
       isDialogOpen: false,
       isConfimationModalOpen: false,
       selectedFile: null,
-      selectedpost: null,
+      selectedreport: null,
       description: '',
       content: '',
       disabled: true,
@@ -38,7 +38,7 @@ export default class post extends Component {
     this.toggleDialog = this.toggleDialog.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.toggleCancelModal = this.toggleCancelModal.bind(this);
-    this.removepost = this.removepost.bind(this);
+    this.removereport = this.removereport.bind(this);
     this.addhandleInputChange = this.addhandleInputChange.bind(this);
     this.onFileChangeHandler = this.onFileChangeHandler.bind(this);
     this.submit = this.submit.bind(this);
@@ -47,7 +47,7 @@ export default class post extends Component {
 
   componentDidMount() {
     this.fechInternship();
-    this.gotposts();
+    this.gotreports();
     
 
   }
@@ -56,18 +56,18 @@ export default class post extends Component {
     const token = sessionStorage.getItem('jwt');
     const currentuser = JSON.parse(sessionStorage.getItem('currentuser'));
 
-    fetch("http://localhost:8081/internships/student/" + currentuser.id, {
+    fetch("http://localhost:8081/internships/student/"+currentuser.id, {
       headers: { 'Authorization': token }
     })
       .then(res => res.json())
       .then(
         (data) => {
           console.log("internship dta: "+data+" id: "+currentuser.id);
-          console.log(data[0].supervisor.id);
+          console.log(data[0].id);
           this.setState({
-            internship: data[0].supervisor.id
+            internship: data[0].id
           });
-          this.gotposts();
+          this.gotreports();
         },
         (error) => {
         }
@@ -75,11 +75,12 @@ export default class post extends Component {
   }
 
 
-  removepost(id) {
+  removereport(id) {
     const token = sessionStorage.getItem('jwt');
     console.log("id :" + id)
 
-    fetch("http://localhost:8081/posts/" + id, {
+    fetch("http://localhost:8081/reports/" + id, {
+
       headers: { 'Authorization': token },
       method: 'DELETE'
     })
@@ -87,8 +88,8 @@ export default class post extends Component {
         if (response.status >= 200 && response.status <= 299) {
           this.resetdata();
           this.setState({ isConfimationModalOpen: false })
-          this.notify("tc", "success", "post removed !");
-          this.gotposts();
+          this.notify("tc", "success", "report removed !");
+          this.gotreports();
 
         } else {
 
@@ -105,12 +106,12 @@ export default class post extends Component {
 
 
   }
-  gotposts() {
+  gotreports() {
     const token = sessionStorage.getItem('jwt');
     const currentuser = JSON.parse(sessionStorage.getItem('currentuser'));
     const internshipID = this.state.internship;
 
-    fetch("http://localhost:8081/supervisors/"+internshipID+"/posts", {
+    fetch("http://localhost:8081/interships/"+internshipID+"/reports", {
       headers: { 'Authorization': token }
     })
       .then(res => res.json())
@@ -119,11 +120,11 @@ export default class post extends Component {
           console.log("repoooooooorts");
           console.log(data);
           this.setState({
-            posts: data
+            reports: data
           });
         },
         (error) => {
-          console.log("error in fetching posts");
+          console.log("error in fetching reports");
           console.error(error);
         }
       )
@@ -139,34 +140,38 @@ export default class post extends Component {
     }
     return bytes;
   }
-  saveByteArray(postName, byte, type) {
+  saveByteArray(reportName, byte, type) {
     var blob = new Blob([byte], { type: type });
     var link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    var fileName = postName;
+    var fileName = reportName;
     link.download = fileName;
     link.click();
   };
 
-  showButtonIfFileExist(post) {
-    if (post.file) {
-      return (<Button onClick={(e) => this.saveByteArray(post.file.name, this.base64ToArrayBuffer(post.file.data), post.file.type)}>{post.file.name} </Button>)
+  showButtonIfFileExist(report) {
+    if (report.file) {
+      return (<Button onClick={(e) => this.saveByteArray(report.file.name, this.base64ToArrayBuffer(report.file.data), report.file.type)}>{report.file.name} </Button>)
     } else {
       return (<p></p>)
     }
   }
 
-  displaymyposts() {
-    if (this.state.posts.length == 0) {
-      return (<h1>you have no post</h1>);
+  displaymyreports() {
+    if (this.state.reports.length == 0) {
+      return (<h1>you have no report</h1>);
     } else {
-      return (this.state.posts.map((post) =>
-        <Card key={post.id} className="card_post">
+      return (this.state.reports.map((report) =>
+        <Card key={report.id} className="card_report">
           <CardBody>
-            <CardTitle className="cardtitle">{post.description}</CardTitle>
-            <CardSubtitle className="cardsub">Pasted At : {post.postedAt}</CardSubtitle>
-            <CardText className="cardtext">{post.content}</CardText>
-            {this.showButtonIfFileExist(post)}
+            <CardTitle className="cardtitle">{report.description}</CardTitle>
+            <CardSubtitle className="cardsub">Pasted At : {report.reportedAt}</CardSubtitle>
+            <CardText className="cardtext">{report.content}</CardText>
+            {this.showButtonIfFileExist(report)}
+            <div className="report_actions">
+              <Button color="info">Update</Button>
+              <Button style={{ backgroundColor: "Red" }} onClick={(e) => this.toggleModal(report.id)} >Remove</Button>
+            </div>
           </CardBody>
         </Card>
       ));
@@ -200,7 +205,7 @@ export default class post extends Component {
 
 
   toggleModal(id) {
-    this.setState({ selectedpost: id }, (e) => this.setState({ isConfimationModalOpen: true }))
+    this.setState({ selectedreport: id }, (e) => this.setState({ isConfimationModalOpen: true }))
 
   }
 
@@ -210,7 +215,7 @@ export default class post extends Component {
     formData.append('file', this.state.selectedFile);
     fetch('http://localhost:8081/upload', {
       headers: { 'Authorization': token },
-      method: 'post',
+      method: 'report',
       body: formData
     }).then(res => {
       if (res.ok) {
@@ -236,7 +241,7 @@ export default class post extends Component {
   resetdata() {
     this.setState({
       selectedFile: null,
-      selectedpost: null
+      selectedreport: null
 
     })
   }
@@ -305,14 +310,14 @@ export default class post extends Component {
     //var dateTime = date+' '+time; 
     const data = new FormData();
     data.append('file', this.state.selectedFile);
-    //data.append('postedAt' , dateTime ) 
+    //data.append('reportedAt' , dateTime ) 
     data.append('description', this.state.description)
     data.append('content', this.state.content);
-    data.append('idsup', this.state.internship); //internship id to fetch the posts
+    data.append('idsup', this.state.internship); //internship id to fetch the reports
     const token = sessionStorage.getItem('jwt');
     // const jsondata = JSON.stringify(data) ; 
 
-    fetch("http://localhost:8081/posts", {
+    fetch("http://localhost:8081/reports", {
       method: 'POST',
       headers: {
         'Authorization': token
@@ -321,9 +326,9 @@ export default class post extends Component {
     })
       .then((response) => {
         if (response.status >= 200 && response.status <= 299) {
-          this.notify("tc", "success", "post published");
+          this.notify("tc", "success", "report published");
           console.log(response.status)
-          this.gotposts();
+          this.gotreports();
           //this.resetdata();
           //  return response.json();
         } else {
@@ -345,18 +350,87 @@ export default class post extends Component {
     return (
       <div className="content">
         <NotificationAlert ref={this.notificationAlert} />
-        <h4 className="note"> Posts by your supervisor </h4>
-        <div className="posts">
-          {this.displaymyposts()}
+        <h4 className="note"> Share files , contents , ... whaterver you want with your students !  </h4>
+        <div className="Newreport">
+          <Form className="form_addreport">
+            <FormGroup>
+              <Input
+                type="text"
+                className="description"
+                placeholder="Click here if you want to report something !"
+                value=""
+                onClick={this.toggleDialog}
+              />
+            </FormGroup>
+          </Form>
+
+          <div>
+            <Dialog open={this.state.isDialogOpen} onClose={this.toggleDialog} aria-labelledby="form-dialog-title">
+              <DialogTitle id="form-dialog-title">Publish a report</DialogTitle>
+              <DialogContent>
+
+                <Form>
+                  <FormGroup>
+                    <Input
+                      name="description"
+                      id="description"
+                      type="text"
+                      placeholder="Description"
+                      invalid={this.state.errors.description && !this.description}
+                      onChange={this.addhandleInputChange}
+
+                    />
+
+                    <FormFeedback>{this.state.errors.description}</FormFeedback>
+                  </FormGroup>
+                  <FormGroup>
+                    <Input
+                      name="content"
+                      id="content"
+                      type="textarea"
+                      placeholder="Content"
+                      style={{ width: "500px" }}
+                      onChange={this.addhandleInputChange}
+                      invalid={this.state.errors.content}
+
+                    />
+                    <FormFeedback>{this.state.errors.content}</FormFeedback>
+                  </FormGroup>
+                  <FormGroup>
+                    <Input
+                      name="file"
+                      id="file"
+                      type="file"
+                      onChange={this.onFileChangeHandler}
+                    />
+
+                  </FormGroup>
+                </Form>
+
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.toggleDialog} color="primary">
+                  Cancel
+                             </Button>
+                <Button onClick={this.submit} disabled={this.state.disabled} color="primary">
+                  Publish
+                            </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+
+        </div>
+        <div className="reports">
+          {this.displaymyreports()}
         </div>
 
         <Modal isOpen={this.state.isConfimationModalOpen} toggle={this.toggleCancelModal} >
-          <ModalHeader toggle={this.toggleCancelModal} >Remove this post ?</ModalHeader>
+          <ModalHeader toggle={this.toggleCancelModal} >Remove this report ?</ModalHeader>
           <ModalBody>
-            Do you really want to remove this post !
+            Do you really want to remove this report !
                           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={(e) => this.removepost(this.state.selectedpost)} >Yes , just do it</Button>{' '}
+            <Button color="primary" onClick={(e) => this.removereport(this.state.selectedreport)} >Yes , just do it</Button>{' '}
             <Button color="secondary" onClick={this.toggleCancelModal}>No</Button>
           </ModalFooter>
         </Modal>

@@ -1,6 +1,7 @@
 
 import React, {useState, useEffect} from "react";
 import InternshipOffers from "views/studentViews/InternshipOffers.js"
+import Internship from "views/studentViews/Internship.js"
 import StudentMeetings from "./StudentMeetings.js"
 
 
@@ -22,6 +23,7 @@ import {
 const User = () => {
   const [supervisor, setSupervisor] = useState([]);
   const [internshipOffers, setInternshipOffers] = useState([]);
+  const [internship, setInternship] = useState([]);
   const PORT = "8081";
   const token  = sessionStorage.getItem('jwt');
   const currentuser =  JSON.parse(sessionStorage.getItem('currentuser')); //student   
@@ -30,6 +32,7 @@ const User = () => {
     console.log("component update...");
     fetchSupervisor();
     fetchInternshipOffers();
+    fetchInternship();
   }, []);
 
   const fetchSupervisor = async () => {
@@ -55,6 +58,26 @@ const User = () => {
     const data = await response.json();
     setInternshipOffers(data);
     console.log("test"+data);
+  };
+
+  const fetchInternship = () => {
+    const token = sessionStorage.getItem('jwt');
+    const currentuser = JSON.parse(sessionStorage.getItem('currentuser'));
+
+    fetch("http://localhost:8081/internships/student/"+currentuser.id, {
+      headers: { 'Authorization': token }
+    })
+      .then(res => res.json())
+      .then(
+        (data) => {
+          console.log("internship dta: "+data+" id: "+currentuser.id);
+          console.log(data[0].id);
+          setInternship(data);
+        },
+        (error) => {
+
+        }
+      )
   };
 
       return (
@@ -97,7 +120,7 @@ const User = () => {
                       </Col>
                       <Col className="ml-auto mr-auto" lg="4" md="6" xs="6">
                         <h5>
-                          2 <br />
+                        {internship.length} <br />
                           <small>Accepted</small>
                         </h5>
                       </Col>
@@ -126,8 +149,8 @@ const User = () => {
                 <CardBody>
                   <ul className="list-unstyled team-members">
                     <li>
-                    {supervisor.map((sup) => (
-                      <Row>
+                    {supervisor.map((sup, id) => (
+                      <Row key={sup.id}>
                         <Col md="2" xs="2">
                           <div className="avatar">
                             <img
@@ -161,9 +184,8 @@ const User = () => {
               </Card>
             </Col>
             <Col md="8">
-              <Card className="card-user">
-                <InternshipOffers internshipOffers={internshipOffers}></InternshipOffers>
-              </Card>
+                <Internship internship={internship}></Internship>
+                <InternshipOffers internship={internship} internshipOffers={internshipOffers}></InternshipOffers>
             </Col>
           </Row>
         </div>
@@ -172,3 +194,4 @@ const User = () => {
   }
 
 export default User;
+
