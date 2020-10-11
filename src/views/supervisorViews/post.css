@@ -61,5 +61,25 @@
 
 .cardtext { 
     font-family: 'Arimo', sans-serif;
+}  
+.visibility{ 
+    width: 100px;
 } 
+
+.student_list{ 
+    height: 200px ; 
+    overflow-y: scroll ; 
+    outline: 1px solid green ;
+} 
+.selected { 
+     
+     color: green;
+} 
+.selected_students {   
+    
+    height: 200px ; 
+    overflow-y: scroll ; 
+    outline: 1px solid green ;
+
+}
 

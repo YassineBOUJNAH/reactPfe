@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@700&display=swap');
+.studentrep { 
+    font-size: 50px ; 
+    font-family: 'PT Sans Narrow', sans-serif;
+} 
+
+.student_img{ 
+
+     width: 80px; 
+     position: relative;
+} 
+
+.flex-container { 
+
+    display: flex ;
+} 
+.flex-container > p { 
+    padding: 25px ; 
+    font-size: 26px; 
+    font-family: 'PT Sans Narrow', sans-serif;
+} 
+
+.report_card { 
+    width : 50vw ;
+}  
+
+.pdfViewer { 
+  
+    height: 750px;
+}
+@media only screen and (max-width: 1024px) {
+     
+    .report_card { 
+        width : 90vw ;
+    }  
+    .search_bar { 
+        width: 90vw; 
+        margin-bottom: 10px ;
+    }
+   
+     
+}   
+
+@media only screen and (min-width: 1024px) {
+     
+    .search_bar{ 
+        width: 619px; 
+        margin-bottom: 10px;
+    }
+     
+}   
+
+
+
+.send_feedback { 
+   right: 10px;  
+   top: 0;
+   position: absolute;
+   
+} 
+
+
+.mess { 
+    width: 500px; 
+    height: 1000px;
+} 
+
+.btnn{ 
+    width: 100px; 
+    text-align: center;
+}

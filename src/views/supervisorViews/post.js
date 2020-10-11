@@ -8,10 +8,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 
 import DialogTitle from '@material-ui/core/DialogTitle';
-
-import NotificationAlert from "react-notification-alert" ;   
-
-
+import FormControl from '@material-ui/core/FormControl';
+import NotificationAlert from "react-notification-alert" ;     
+import  Select  from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 
 export default class post extends Component { 
 
@@ -19,13 +20,17 @@ export default class post extends Component {
          super(props)
 
          this.state = {  
-               posts : [] , 
+               posts : [] ,  
+               internships : [] ,  
+               selectedstudents : [] , 
                isDialogOpen : false , 
                isConfimationModalOpen : false ,   
-               selectedFile : null , 
+               selectedFile : null ,  
+               isPrivateOpen : false , 
                selectedpost : null , 
                description : '' , 
-               content :'' , 
+               content :'' ,  
+               visibility :null , 
                disabled : true , 
                errors : {  
                    description : null , 
@@ -39,16 +44,57 @@ export default class post extends Component {
          this.toggleCancelModal = this.toggleCancelModal.bind(this); 
          this.removePost = this.removePost.bind(this);
          this.addhandleInputChange = this.addhandleInputChange.bind(this);    
-         this.onFileChangeHandler = this.onFileChangeHandler.bind(this);
+         this.onFileChangeHandler = this.onFileChangeHandler.bind(this); 
+         this.handleOpenPrivateModal = this.handleOpenPrivateModal.bind(this);
+         this.handleClosePrivateModal = this.handleClosePrivateModal.bind(this); 
+         this.selectStudent = this.selectStudent.bind(this);
          this.submit = this.submit.bind(this);
 
      }   
 
      componentDidMount() { 
        
-       this.gotposts();
+       this.gotposts(); 
+       this.gotstudent();
       
-  }        
+  }  
+  
+  //I got the internships , so I can access the student .
+
+  gotstudent(){  
+
+
+    const token  = sessionStorage.getItem('jwt');  
+    const currentuser =  JSON.parse(sessionStorage.getItem('currentuser')); 
+      
+  fetch("http://localhost:8081/supervisor/"+currentuser.id+"/internships", {
+    headers: { 'Authorization': token }
+  })
+    .then(res => res.json())
+    .then(
+      (data) => { 
+         
+        this.setState({ 
+           internships  : data
+        });
+      },
+      (error) => {
+           
+      }
+    ) 
+  }
+  
+  //handleOpen for private post modal
+
+  handleOpenPrivateModal(){ 
+    this.setState({ isPrivateOpen : true})
+  }  
+
+  //handleClose for private post modal
+
+  handleClosePrivateModal(){  
+    this.setState({ isPrivateOpen : false})
+  }
  
 
  removePost(id){   
@@ -81,7 +127,8 @@ export default class post extends Component {
    }); 
 
 
-  }
+  } 
+
   gotposts(){ 
     const token  = sessionStorage.getItem('jwt');  
     const currentuser =  JSON.parse(sessionStorage.getItem('currentuser')); 
@@ -128,6 +175,79 @@ showButtonIfFileExist(post){
     }else{ 
       return (<p></p>)
     }
+}  
+
+    displaySelectedStudents(){  
+       
+      if(this.state.selectedstudents.length == 0){  
+
+        return(<p>No student is selected</p>) ;
+
+        }else{ 
+
+ 
+            return ( this.state.selectedstudents.map((student)=>      
+                <Card className="card_student">   
+                     <CardBody>     
+                      <CardTitle className="cardtitle">{student.frstname} {student.lastname}</CardTitle> 
+  
+                 <div className="student_action"> 
+                  <Button color="info">Remove</Button> 
+  
+                   </div>      
+                   </CardBody>
+            </Card>      
+
+
+            ))}   
+    }
+
+
+    //add a student to the selected students 
+
+    selectStudent(student){  
+       
+      this.setState(state => {
+        const selectedstudents = [...state.selectedstudents, student];
+        return {
+             selectedstudents
+          
+        };
+
+    } )
+  }
+
+    displayMystudents(){   
+       if(this.state.internships.length == 0){  
+
+            return(<h1>you have no post</h1>) ;
+
+        }else{ 
+ 
+     
+ return ( this.state.internships.map((internship)=>      
+ <Card className="card_student">   
+ <CardBody>     
+      <CardTitle className="cardtitle">{internship.student.frstname} {internship.student.lastname}</CardTitle> 
+
+        <div className="student_action"> 
+            <Button color="info" onClick={(e) => this.selectStudent(internship.student) }>Select</Button> 
+          
+        </div>      
+ </CardBody>
+</Card>      
+ 
+ 
+ 
+ 
+ ) ) ;
+
+   
+
+  
+}   
+
+
 }
  
   displaymyposts(){  
@@ -140,8 +260,7 @@ showButtonIfFileExist(post){
    return ( this.state.posts.map((post)=>      
    <Card className="card_post">   
    <CardBody>     
-     
-       <CardTitle className="cardtitle">{post.description}</CardTitle> 
+        <CardTitle className="cardtitle">{post.description}</CardTitle> 
         <CardSubtitle className="cardsub">Pasted At : {post.postedAt}</CardSubtitle> 
          <CardText className = "cardtext">{post.content}</CardText>           
           {this.showButtonIfFileExist(post)}
@@ -149,7 +268,6 @@ showButtonIfFileExist(post){
               <Button color="info">Update</Button> 
               <Button style={{ backgroundColor: "Red"  }} onClick={(e) => this.toggleModal(post.id)} >Remove</Button> 
           </div>      
-
    </CardBody>
  </Card>      
    
@@ -261,7 +379,9 @@ showButtonIfFileExist(post){
         const value = target.value  ;
         const name = target.name    ; 
 
-        let errors = this.state.errors ; 
+        let errors = this.state.errors ;  
+        let val = false ; 
+        
 
         switch(name){  
           case 'description' : 
@@ -269,21 +389,31 @@ showButtonIfFileExist(post){
              break ;   
           case 'content' : 
              errors.content = value.length < 5 ? "Content should be >= 5" : null
-             break ;  
+             break ;   
+          case 'visibility' : 
+             val = value == 2 ? true : false ;  
+             break
          
            default : 
              break ;   
 
-        }
+        } 
+
+        this.setState({ isPrivateOpen : val})
 
        this.setState({errors , [name]: value}, ()=> { 
           if(this.state.errors.description !== null || this.state.errors.content !== null ){
-            this.setState({ disabled : true }) 
-            console.log("form not valid")
+            this.setState({ disabled : true })   
+            console.log("description : "+this.state.errors.description + "content :"+this.state.errors.content)
+           
+         
           }else{ 
-            this.setState({ disabled : false }) 
-            console.log("form valid")
-          } 
+            this.setState({ disabled : false })   
+            console.log("description : "+this.state.errors.description + "content :"+this.state.errors.content)
+            
+            
+          }  
+          
 
        })  
 
@@ -342,6 +472,7 @@ showButtonIfFileExist(post){
                    <Form className="form_addpost"> 
                        <FormGroup> 
                          <Input   
+                                 id="share"
                                  type="text"  
                                  className="description"  
                                  placeholder="Click here if you want to post something !"  
@@ -364,7 +495,7 @@ showButtonIfFileExist(post){
                                        id   = "description"
                                        type = "text"  
                                        placeholder = "Description"  
-                                       invalid = {this.state.errors.description && !this.description}
+                                       invalid = {this.state.errors.description && !this.state.description}
                                        onChange={this.addhandleInputChange}
                                     
                                     />  
@@ -387,12 +518,35 @@ showButtonIfFileExist(post){
                                <FormGroup> 
                                  <Input  
                                     name =   "file" 
-                                    id   =   "file" 
+                                    id   =   "uploadfile" 
                                     type =   "file" 
                                     onChange={this.onFileChangeHandler} 
                                  />  
                                  
-                               </FormGroup>
+                               </FormGroup> 
+                               <FormGroup>    
+
+                               <FormControl>
+                         {/*        <InputLabel id="demo-controlled-open-select-label">Visibility</InputLabel>
+                              <Select
+                                     labelId="demo-controlled-open-select-label"
+                                     id="demo-controlled-open-select"  
+                                     name = "visibility"
+                                     className="visibility"  
+                                     onChange = {this.addhandleInputChange}
+                                >
+                              
+                                 <MenuItem value={1}>Public</MenuItem>
+                                 <MenuItem value={2}>Private</MenuItem> 
+
+                       </Select>  */}
+                               </FormControl>
+                              
+                                 
+                              
+                                 
+                               </FormGroup>  
+                             
                            </Form>
 
                          </DialogContent>
@@ -400,7 +554,7 @@ showButtonIfFileExist(post){
                            <Button onClick={this.toggleDialog} color="primary">
                                      Cancel
                              </Button>
-                             <Button onClick={this.submit} disabled={this.state.disabled} color="primary">
+                             <Button id="publish" onClick={this.submit} disabled={this.state.disabled} color="primary">
                                      Publish
                             </Button>
                          </DialogActions>
@@ -421,7 +575,37 @@ showButtonIfFileExist(post){
                         <Button color="primary" onClick = {(e) => this.removePost(this.state.selectedpost)} >Yes , just do it</Button>{' '}
                         <Button color="secondary" onClick = {this.toggleCancelModal}>No</Button>
                   </ModalFooter>
-             </Modal>
+             </Modal> 
+
+             {/*Private post modal*/} 
+
+             <Dialog open={this.state.isPrivateOpen} onClose={this.handleClosePrivateModal} aria-labelledby="form-dialog-title">
+                       <DialogTitle id="form-dialog-title">SELECT STUDENTS</DialogTitle>
+                       <DialogContent>  
+                         <div className="student_list"> 
+                             {this.displayMystudents()}  
+                            
+                         </div>  
+                         <p className="selected">Selected students</p>
+                         <div className="selected_students"> 
+
+                             {this.displaySelectedStudents()}  
+                             
+                         
+
+                         </div>
+                           
+                           
+                       </DialogContent>  
+                         <DialogActions>
+                           <Button color="primary" onClick={this.handleClosePrivateModal}>
+                                     Cancel
+                             </Button>
+                             <Button  color="primary">
+                                     Confirm
+                            </Button>
+                         </DialogActions>
+              </Dialog>
               
            
              

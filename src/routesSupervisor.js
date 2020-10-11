@@ -9,7 +9,8 @@ import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js"; 
 import Internships from "views/supervisorViews/internships" ;  
 import Meetings from 'views/supervisorViews/meetings' ;  
-import Post from 'views/supervisorViews/post'
+import Post from 'views/supervisorViews/post' ; 
+import Reports from 'views/supervisorViews/reports'
 
 var routes = [
   {
@@ -37,7 +38,7 @@ var routes = [
     path: "/reports",
     name: "reports monitoring",
     icon: "nc-icon nc-book-bookmark",
-    component: UserPage,
+    component: Reports,
     layout: "/supervisor",
   } , 
    {
