@@ -159,17 +159,16 @@ export default class report extends Component {
 
   displaymyreports() {
     if (this.state.reports.length == 0) {
-      return (<h1>you have no report</h1>);
+      return (<h3>No report found</h3>);
     } else {
       return (this.state.reports.map((report) =>
         <Card key={report.id} className="card_report">
           <CardBody>
             <CardTitle className="cardtitle">{report.description}</CardTitle>
-            <CardSubtitle className="cardsub">Pasted At : {report.reportedAt}</CardSubtitle>
+            <CardSubtitle className="cardsub">Version : {report.reportedAt}</CardSubtitle>
             <CardText className="cardtext">{report.content}</CardText>
             {this.showButtonIfFileExist(report)}
             <div className="report_actions">
-              <Button color="info">Update</Button>
               <Button style={{ backgroundColor: "Red" }} onClick={(e) => this.toggleModal(report.id)} >Remove</Button>
             </div>
           </CardBody>
@@ -350,7 +349,7 @@ export default class report extends Component {
     return (
       <div className="content">
         <NotificationAlert ref={this.notificationAlert} />
-        <h4 className="note"> Share files , contents , ... whaterver you want with your students !  </h4>
+        <h4 className="note"> Add report  </h4>
         <div className="Newreport">
           <Form className="form_addreport">
             <FormGroup>
@@ -375,7 +374,7 @@ export default class report extends Component {
                       name="description"
                       id="description"
                       type="text"
-                      placeholder="Description"
+                      placeholder="Version"
                       invalid={this.state.errors.description && !this.description}
                       onChange={this.addhandleInputChange}
 

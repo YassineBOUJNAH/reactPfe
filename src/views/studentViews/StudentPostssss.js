@@ -63,7 +63,7 @@ export default class post extends Component {
       .then(
         (data) => {
           console.log("internship dta: "+data+" id: "+currentuser.id);
-          console.log(data[0].supervisor.id);
+          //console.log(data[0].supervisor.id);
           this.setState({
             internship: data[0].supervisor.id
           });
@@ -158,7 +158,7 @@ export default class post extends Component {
 
   displaymyposts() {
     if (this.state.posts.length == 0) {
-      return (<h1>you have no post</h1>);
+      return (<h3>No posts by your supervisor</h3>);
     } else {
       return (this.state.posts.map((post) =>
         <Card key={post.id} className="card_post">
@@ -327,17 +327,13 @@ export default class post extends Component {
           //this.resetdata();
           //  return response.json();
         } else {
-
           throw "Something went wrong , error status : " + response.status;
         }
       })
-
       .catch((error) => {
 
         this.notify("tc", "danger", error);
-
       });
-
 
   }
 

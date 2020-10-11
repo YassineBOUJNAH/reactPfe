@@ -71,7 +71,7 @@ const User = () => {
       .then(
         (data) => {
           console.log("internship dta: "+data+" id: "+currentuser.id);
-          console.log(data[0].id);
+          //console.log(data[0].id);
           setInternship(data);
         },
         (error) => {
