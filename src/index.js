@@ -26,6 +26,8 @@ import "assets/scss/paper-dashboard.scss?v=1.2.0";
 import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import 'font-awesome/css/font-awesome.min.css'
+import 'react-table/react-table.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Login from './components/Login';
 

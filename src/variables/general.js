@@ -51,4 +51,6 @@ const tbody = [
 
 // data for <thead> of table in TableList view
 // data for <tbody> of table in TableList view
-export { thead, tbody };
+const SERVER_URL = 'http://localhost:8081/';
+
+export { thead, tbody, SERVER_URL };

@@ -62,14 +62,14 @@ class Sidebar extends React.Component {
             className="simple-text logo-mini"
           >
             <div className="logo-img">
-              <img src={logo} alt="react-logo" />
+              <img src={require("assets/img/ensias.png")} alt="react-logo" />
             </div>
           </a>
           <a
             href="https://www.creative-tim.com"
             className="simple-text logo-normal"
           >
-            Yassine 
+            MIOLA PFE 
           </a>
         </div>
         <div className="sidebar-wrapper" ref={this.sidebar}>

@@ -25,70 +25,37 @@ import Maps from "views/Map.js";
 import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js";
 import Utilisateurs from 'views/Utilisateurs.js'
+import UsersManagement from 'views/UsersManagement'
+import IntershipsOffers from 'views/adminViews/IntershipsOffers'
+import StudentsInterships from 'views/adminViews/StudentsInterships';
 
 var routes = [
+  // {
+  //   path: "/users",
+  //   name: "Utilisateurs",
+  //   icon: "nc-icon nc-single-02",
+  //   component: Utilisateurs,
+  //   layout: "/admin",
+  // }, 
   {
     path: "/users",
-    name: "Utilisateurs",
+    name: "Users",
     icon: "nc-icon nc-single-02",
-    component: Utilisateurs,
+    component: UsersManagement,
     layout: "/admin",
   },
   {
-    path: "/gestion",
-    name: "Gestion",
-    icon: "nc-icon nc-bank",
-    component: Dashboard,
+    path: "/intershipsOffers",
+    name: "Interships Offers",
+    icon: "nc-icon nc-briefcase-24",
+    component: IntershipsOffers,
     layout: "/admin",
-  },
+  },  
   {
-    path: "/gestion_allocation",
-    name: "Gestion d'allocation",
-    icon: "nc-icon nc-diamond",
-    component: Icons,
-    layout: "/admin",
-  },
-  {
-    path: "/rapports",
-    name: "Rapport",
-    icon: "nc-icon nc-pin-3",
-    component: Maps,
-    layout: "/admin",
-  },
-  {
-    path: "/administration",
-    name: "Administration",
-    icon: "nc-icon nc-bell-55",
-    component: Notifications,
-    layout: "/admin",
-  },
-  {
-    path: "/user-page",
-    name: "User Profile",
-    icon: "nc-icon nc-single-02",
-    component: UserPage,
-    layout: "/admin",
-  },
-  {
-    path: "/tables",
-    name: "Table List",
-    icon: "nc-icon nc-tile-56",
-    component: TableList,
-    layout: "/admin",
-  },
-  {
-    path: "/typography",
-    name: "Typography",
-    icon: "nc-icon nc-caps-small",
-    component: Typography,
-    layout: "/admin",
-  },
-  {
-    pro: true,
-    path: "/upgrade",
-    name: "Upgrade to PRO",
-    icon: "nc-icon nc-spaceship",
-    component: UpgradeToPro,
+    path: "/StudentsInterships",
+    name: "Students Interships",
+    icon: "nc-icon nc-hat-3",
+    component: StudentsInterships,
     layout: "/admin",
   },
 ];
