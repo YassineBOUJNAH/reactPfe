@@ -208,19 +208,19 @@ class NewStudentForm extends React.Component {
                                     onChange={this.addhandleInputChange} />
                             </FormGroup>
                             <FormGroup>
-                                <Label htmlFor="city">Ville</Label>
+                                <Label htmlFor="city">City</Label>
                                 <Input type="text" id="addpcityassword" name="city"
                                     value={this.state.city}
                                     onChange={this.addhandleInputChange} />
                             </FormGroup>
                             <FormGroup>
-                                <Label htmlFor="phone">Tel</Label>
+                                <Label htmlFor="phone">Phone</Label>
                                 <Input type="text" id="phone" name="phone"
                                     value={this.state.phone}
                                     onChange={this.addhandleInputChange} />
                             </FormGroup>
                             <FormGroup>
-                                <Label htmlFor="sexe">Sexe</Label>
+                                <Label htmlFor="sexe">Gender</Label>
                                 <Input type="select" id="sexe" name="sexe"
                                     value={this.state.sexe}
                                     onChange={this.addhandleInputChange} >

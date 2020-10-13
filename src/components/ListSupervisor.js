@@ -2,19 +2,21 @@ import React, { Component } from 'react';
 import { SERVER_URL } from '../variables/general'
 import {
     Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, Row
+    CardTitle, CardSubtitle, Button, Row,CardHeader,CardFooter
 } from 'reactstrap';
 import NewSupervisorForm from '../components/NewSupervisorForm'
+import { Link } from 'react-router-dom';
+
 
 function RenderSupervisorItem({ supervisor }) {
     return (
         <Card className="col-8 col-md-3 m-1 col-lg-2">
-            <CardImg top width="100%" src={require("assets/img/adminProfile.png")} alt="Card image cap" />
+            <CardImg top width="100%" src={require("assets/img/default-avatar.png")} alt="Card image cap" />
             <CardBody>
-                <CardTitle>{supervisor.username}</CardTitle>
-                <CardSubtitle>{supervisor.fullname}</CardSubtitle>
-                <CardText>{supervisor.phone}</CardText>
+                <CardTitle tag="h6">{supervisor.username}</CardTitle>
+                <CardSubtitle>{supervisor.frstname + "  " + supervisor.lastname}</CardSubtitle>
             </CardBody>
+            <CardFooter className="text-muted">{supervisor.speciality}</CardFooter>
         </Card>
     );
 }
@@ -66,16 +68,18 @@ class ListSupervisor extends Component {
 
         return (
             <div className="content">
-                <h4>Supervisor </h4>
-                <hr />
                 <NewSupervisorForm fetchSupervisors={this.fetchSupervisors} isOpen={this.state.isAddSupervisorModalOpen} toggle={this.addSupervisorModalOpen} /> 
-                <Button variant='raised'
-                    color='primary'
-                    style={{ 'margin': '10px' }}
-                    onClick={() => this.addSupervisorModalOpen()}>
-                    New Supervisor</Button>
+
+                    <CardHeader>
+                            <CardTitle tag="h4"><Row className="mx-2">Supervisors List
+                                        <Link onClick={() => this.addSupervisorModalOpen()} className=" ml-auto mr-4 btn-sm" color="secondary">
+                                    <i className="fa fa-plus-square " /><span > Add</span>
+                                </Link></Row>
+                            </CardTitle>
+                    </CardHeader>
+                    <CardBody>
                 <Row>
-                    {menu}</Row>
+                    {menu}</Row></CardBody>
             </div>);
     }
 }

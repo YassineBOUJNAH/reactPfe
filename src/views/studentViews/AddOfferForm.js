@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import NotificationAlert from "react-notification-alert";
 import { toast } from 'react-toastify';
-import StudentHome from './StudentHome.js'
+import StudentHome from './StudentHome.js';
+import InternshipOffers from './InternshipOffers.js'
 
-const AddOfferForm = () => {
 
-    const [form, setForm] = useState({ title: '', entreprise: '', description: 'bbbb', studentUsername: 'aaaa' });
+const AddOfferForm = ({toggle}) => {
+
+    const [form, setForm] = useState({ title: '', entreprise: '', description: '', studentUsername: '', startdate: '', lasttdate: '' });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [internshipOffers, setInternshipOffers] = useState([]);
     const token = sessionStorage.getItem('jwt');
     const currentuser = JSON.parse(sessionStorage.getItem('currentuser')); //student 
+    //const [modal, setModal] = useState(false);
+    //const toggle = () => setModal(!modal);
 
     useEffect(() => {
         fetchInternshipOffers();
@@ -40,9 +45,8 @@ const AddOfferForm = () => {
         //setForm({ title: 'devops', entreprise: 'ensias', description: 'stage', studentUsername: 'hamza' })
         //setIsSubmitting(true)
         await addOffer(form);
+        window.location.reload(true);
         //setIsSubmitting(false);
-
-
         fetchInternshipOffers();
     };
 
@@ -52,23 +56,30 @@ const AddOfferForm = () => {
         console.log(currentuser.username + " username");
         console.log(form);
         const object = {
-            title: "test",
-            entreprise: "IBM",
-            description: "full stack developer Intership at IBM",
-            studentUsername: "Yassine"
+            title: form.title,
+            entreprise: form.entreprise,
+            description: form.description,
+            studentUsername: currentuser.username,
+            startdate: form.startdate,
+            lasttdate: form.lasttdate
         }
+        console.log("hey oject: "+JSON.stringify(object));
+        
         await fetch('http://localhost:8081/internshipoffers?studentId=' + currentuser.id, {
             method: 'POST',
             headers: {
                 'Authorization': token,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(form)
-        }).then(function (response) {
-            console.log(response)
-            return response.json();
-        });
-    };
+            body: JSON.stringify(object)
+        }).then((response) => {
+            if (response.status >= 200 && response.status <= 299) {
+              console.log(response.status)
+              fetchInternshipOffers();
+            }})
+            .catch((error) => {
+                console.error(error);
+    });}
 
     return (
         <>
@@ -78,18 +89,25 @@ const AddOfferForm = () => {
                     <Input type="text" name="title" id="title" placeholder="internship title" value={form.title} onChange={handleChange} />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="entreprise">entreprise</Label>
-                    <Input type="text" name="entreprise" id="entreprise" placeholder="entreprise" value={form.entreprise} onChange={handleChange} />
+                    <Label for="entreprise">Entreprise</Label>
+                    <Input type="text" name="entreprise" id="entreprise" placeholder="Entreprise" value={form.entreprise} onChange={handleChange} />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="description">description</Label>
-                    <Input type="text" name="description" id="description" value={form.description} onChange={handleChange} />
+                    <Label for="description">Description</Label>
+                    <Input type="text" name="description" placeholder="Description" id="description" value={form.description} onChange={handleChange} />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="studentUsername">studentUsername</Label>
+                    <Label for="startdate">Date start</Label>
+                    <Input type="date" name="startdate" id="startdate" value={form.startdate} onChange={handleChange} />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="lasttdate">Date end</Label>
+                    <Input type="date" name="lasttdate" id="lasttdate" value={form.lasttdate} onChange={handleChange} />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="studentUsername">Student Username</Label>
                     <Input type="hidden" name="studentUsername" id="studentUsername" value={currentuser.username} onChange={handleChange} />
                 </FormGroup>
-
                 <Button color="primary">Submit</Button>
             </Form>
         </>

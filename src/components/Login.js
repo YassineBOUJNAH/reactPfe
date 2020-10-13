@@ -122,9 +122,9 @@ export default class Login extends Component {
                 <div className="row ">
                     <Jumbotron className="mt-3 mx-auto col-md-9 col-13">
                         <Container >
-                            <h1 className="display-3 ml-4">Bienvenue</h1>
-                            <p className="lead  ml-4">Si vous êtes besoin d'un compte, vous pouvez le demander à un administrateur</p>
-                            <Form onSubmit={this.handleSubmit} className="m-4">
+                            <h1  style={{  'text-align': 'center'}} className="display-3 ml-4 "><font size={"7"} style={{ 'height': '5px',   'text-align': 'center'}}  >Welcome to </font><p style={{ 'color': '#3f87d9' }} >MiolaPFE</p></h1>
+                            <p className="lead  ml-5">If you need an account, you can request it from an administrator</p>
+                            <Form onSubmit={this.handleSubmit} className="m-5">
                                 <FormGroup row>
                                     <Label htmlFor="username" md={2}>Username</Label>
                                     <Col md={9}>
@@ -151,7 +151,7 @@ export default class Login extends Component {
                                 </FormGroup>
                                 <FormGroup row>
                                     <Col md={{ size: 10, offset: 2 }}>
-                                        <Button type="submit" color="primary">
+                                        <Button type="submit" color="primary" id="login">
                                             Login
                                     </Button>
                                     </Col>

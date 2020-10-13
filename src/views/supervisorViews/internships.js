@@ -329,13 +329,11 @@ class Internships extends React.Component {
               <td>{internship.lasttdate}</td>   
               <td>{internship.entreprise}</td>
 
-             <td> <Button1 name ="Meeting" onclick = {(e) => this.toggleModal(internship.id)}/></td>   
+             <td> <Button1 id="meeting" name ="Meeting" onclick = {(e) => this.toggleModal(internship.id)}/></td>   
              <td> <Button1 name ="Student" onclick = {(e) => this.toggleModalS(internship.id)}/> </td>   
         
            
-              
-     
-
+            
              </tr>
             
             
@@ -356,7 +354,7 @@ class Internships extends React.Component {
                             <Form onSubmit={this.addhandleSubmit}>
                                 <FormGroup>
                                     <Label htmlFor="description">Description</Label>
-                                    <Input type="textarea" id="adddescription" name="adddescription"
+                                    <Input type="textarea" id="adddescription" name="adddescription" 
                                         innerRef={(input) => this.description = input}
                                         invalid={this.state.errors.description !== ''}
                                         onBlur={this.addhandleBlur('adddescription')}
@@ -385,7 +383,7 @@ class Internships extends React.Component {
                                    
                                       <FormFeedback>{this.state.errors.date}</FormFeedback>
                                 </FormGroup> 
-                                <Button  type="submit" value="submit" color="primary" >SEND</Button>
+                                <Button  id="send" type="submit" value="submit" color="primary" >SEND</Button>
                             </Form>
                         </ModalBody>
                     </Modal>  

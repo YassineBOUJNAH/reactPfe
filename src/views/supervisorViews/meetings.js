@@ -430,7 +430,7 @@ class Meetings extends React.Component {
           {  
            this.state.internships 
            .filter(internship => internship.meeting !== null ) 
-           .map((internship) =>  
+           .map((internship , index) =>  
              
              <tr>
               <td>{internship.id}</td>
@@ -440,9 +440,9 @@ class Meetings extends React.Component {
             
              
            {/*  <td> <Button1 name ="Meeting" onclick = {(e) => this.toggleModal(internship.id)}/></td> */}    
-             <td>  <Button1 name ="Student" onclick = {(e) => this.toggleModalS(internship.id)}/></td>    
-             <td> <Button color="info" onClick={(e) => this.toggleModal(internship.id)} >Update</Button></td>  
-             <td> <Button style={{ backgroundColor: "Red"  }} onClick={(e) => this.cancelMeetingModal(internship.id)}>Remove</Button></td>
+             <td>  <Button1 id={"student"+index} name ="Student" onclick = {(e) => this.toggleModalS(internship.id)}/></td>    
+             <td> <Button id={"update"+index} color="info" onClick={(e) => this.toggleModal(internship.id)} >Update</Button></td>  
+             <td> <Button id={"delete"+index} style={{ backgroundColor: "Red"  }} onClick={(e) => this.cancelMeetingModal(internship.id)}>Remove</Button></td>
            
              </tr>
             
@@ -461,7 +461,7 @@ class Meetings extends React.Component {
                            Do you really want to cancel the meeting meeting !
                         </ModalBody>
                         <ModalFooter>
-                        <Button color="primary" onClick = {(e) => this. cancelMeeting(this.state.selectedinternship)} >Yes , just do it</Button>{' '}
+                        <Button id="justdoit" color="primary" onClick = {(e) => this. cancelMeeting(this.state.selectedinternship)} >Yes , just do it</Button>{' '}
                         <Button color="secondary" onClick = {this.toggleCancelMeetingModal}>No</Button>
                     </ModalFooter>
                     </Modal>

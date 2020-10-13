@@ -171,7 +171,7 @@ class StudentMeetings extends React.Component {
         const token = sessionStorage.getItem('jwt');
         const currentuser = JSON.parse(sessionStorage.getItem('currentuser'));
 
-        fetch("http://localhost:8081/internships/student/" + currentuser.id , {
+        fetch("http://localhost:8081/internships/student/" + currentuser.id, {
             headers: { 'Authorization': token }
         })
             .then(res => res.json())

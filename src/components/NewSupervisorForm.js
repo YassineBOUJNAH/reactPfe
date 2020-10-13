@@ -173,7 +173,7 @@ class NewSupervisorForm extends React.Component {
                                 <FormFeedback>{errors.addpassword}</FormFeedback>
                             </FormGroup>
                             <FormGroup>
-                                <Label htmlFor="speciality">speciality</Label>
+                                <Label htmlFor="speciality">Speciality</Label>
                                 <Input type="text" id="speciality" name="speciality"
                                     value={this.state.speciality}
                                     onChange={this.addhandleInputChange} />
@@ -203,7 +203,7 @@ class NewSupervisorForm extends React.Component {
                                     onChange={this.addhandleInputChange} />
                             </FormGroup>
                             <FormGroup>
-                                <Label htmlFor="sexe">Sexe</Label>
+                                <Label htmlFor="sexe">Gender</Label>
                                 <Input type="select" id="sexe" name="sexe"
                                     value={this.state.sexe}
                                     onChange={this.addhandleInputChange} >

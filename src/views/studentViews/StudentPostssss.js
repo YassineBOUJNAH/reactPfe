@@ -68,10 +68,9 @@ export default class post extends Component {
             internship: data[0].supervisor.id
           });
           this.gotposts();
-        },
-        (error) => {
-        }
-      )
+        }).catch((error) => {
+          console.log(error);
+          });
   }
 
 
@@ -121,12 +120,9 @@ export default class post extends Component {
           this.setState({
             posts: data
           });
-        },
-        (error) => {
-          console.log("error in fetching posts");
-          console.error(error);
-        }
-      )
+        }).catch((error) => {
+        console.log(error);
+        });
   }
 
   base64ToArrayBuffer(base64) {

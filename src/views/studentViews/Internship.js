@@ -48,16 +48,18 @@ const Internship = ({ internship }, props) => {
                       <th>Title</th>
                       <th>Entreprise</th>
                       <th>Description</th>
-                      <th className="text-right">State</th>
+                      <th>Start Date</th>
+                      <th>Start End</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {internship.map((internOffer) => (
+                    {internship.map((intern) => (
                       <tr>
-                        <td>{internOffer.title}</td>
-                        <td>{internOffer.entreprise}</td>
-                        <td>{internOffer.description}</td>
-                        <td className="text-right">{internOffer.state}</td>
+                        <td>{intern.title}</td>
+                        <td>{intern.entreprise}</td>
+                        <td>{intern.description}</td>
+                        <td>{intern.startdate}</td>
+                        <td>{intern.lasttdate}</td>
                       </tr>
                     ))}
                   </tbody>

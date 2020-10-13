@@ -78,7 +78,7 @@ const InternshipOffers = ({ internshipOffers, internship }, props) => {
                         <td>{internOffer.title}</td>
                         <td>{internOffer.entreprise}</td>
                         <td>{internOffer.description}</td>
-                        <td style={internOffer.state == "accepted" ? { color: 'green' } : { color: 'red' }}>{internOffer.state}</td>
+                        <td style={internOffer.state == "Accepted" ? { color: 'green' } : { color: 'red' }}>{internOffer.state}</td>
                         <td className="text-right">
                           <button className="btn btn-danger" onClick={() => deleteInternshipOffer(internOffer.id)}>
                             Delete
@@ -97,7 +97,7 @@ const InternshipOffers = ({ internshipOffers, internship }, props) => {
         <Modal isOpen={modal} toggle={toggle} className={className}>
           <ModalHeader toggle={toggle}>Add internship offer</ModalHeader>
           <ModalBody>
-            <InternshipOfferForm></InternshipOfferForm>
+            <InternshipOfferForm toggle={toggle} isOpen={modal}></InternshipOfferForm>
           </ModalBody>
         </Modal>
       </div>

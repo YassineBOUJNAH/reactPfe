@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Button, FormFeedback, Alert, Card, CardBody, CardText, CardLink, CardSubtitle, CardTitle } from 'reactstrap'
+import { Form, FormGroup, CardHeader, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Button, FormFeedback, Alert, Card, CardBody, CardText, CardLink, CardSubtitle, CardTitle } from 'reactstrap'
 import './post.css'
 
 
@@ -42,13 +42,15 @@ export default class report extends Component {
     this.addhandleInputChange = this.addhandleInputChange.bind(this);
     this.onFileChangeHandler = this.onFileChangeHandler.bind(this);
     this.submit = this.submit.bind(this);
+    this.fechInternship = this.fechInternship.bind(this);
+    this.gotreports = this.gotreports.bind(this);
 
   }
 
   componentDidMount() {
     this.fechInternship();
     this.gotreports();
-    
+
 
   }
 
@@ -56,23 +58,22 @@ export default class report extends Component {
     const token = sessionStorage.getItem('jwt');
     const currentuser = JSON.parse(sessionStorage.getItem('currentuser'));
 
-    fetch("http://localhost:8081/internships/student/"+currentuser.id, {
+    fetch("http://localhost:8081/internships/student/" + currentuser.id, {
       headers: { 'Authorization': token }
     })
       .then(res => res.json())
       .then(
         (data) => {
-          console.log("internship dta: "+data+" id: "+currentuser.id);
+          console.log("internship dta: " + data + " id: " + currentuser.id);
           console.log(data[0].id);
           this.setState({
             internship: data[0].id
           });
           this.gotreports();
-        },
-        (error) => {
-        }
-      )
-  }
+        }).catch((error) => {
+          console.log(error);
+        });
+  };
 
 
   removereport(id) {
@@ -111,7 +112,7 @@ export default class report extends Component {
     const currentuser = JSON.parse(sessionStorage.getItem('currentuser'));
     const internshipID = this.state.internship;
 
-    fetch("http://localhost:8081/interships/"+internshipID+"/reports", {
+    fetch("http://localhost:8081/internships/student/" + currentuser.id, {
       headers: { 'Authorization': token }
     })
       .then(res => res.json())
@@ -150,30 +151,32 @@ export default class report extends Component {
   };
 
   showButtonIfFileExist(report) {
-    if (report.file) {
-      return (<Button onClick={(e) => this.saveByteArray(report.file.name, this.base64ToArrayBuffer(report.file.data), report.file.type)}>{report.file.name} </Button>)
+    if (report.reportfile) {
+      return (<Button color="primary" onClick={(e) => this.saveByteArray(report.reportfile.description, this.base64ToArrayBuffer(report.reportfile.data), report.reportfile.type)}>Download attached file</Button>)
     } else {
-      return (<p></p>)
+      return (<p>No file found</p>)
     }
   }
 
   displaymyreports() {
+    console.log("check report ");
     if (this.state.reports.length == 0) {
       return (<h3>No report found</h3>);
     } else {
-      return (this.state.reports.map((report) =>
-        <Card key={report.id} className="card_report">
-          <CardBody>
-            <CardTitle className="cardtitle">{report.description}</CardTitle>
-            <CardSubtitle className="cardsub">Version : {report.reportedAt}</CardSubtitle>
-            <CardText className="cardtext">{report.content}</CardText>
-            {this.showButtonIfFileExist(report)}
-            <div className="report_actions">
-              <Button style={{ backgroundColor: "Red" }} onClick={(e) => this.toggleModal(report.id)} >Remove</Button>
-            </div>
-          </CardBody>
-        </Card>
-      ));
+      return (
+        this.state.reports
+          .filter(report => report.reportfile !== null)
+          .map((report) =>
+            <Card style={{ backgroundColor: '#f2ecba', borderColor: '#333', width: '100%' }} key={report.reportfile.id} className="card_post">
+              <CardBody>
+                <CardTitle className="cardtitle">{report.reportfile.description}</CardTitle>
+                <CardSubtitle className="cardsub">Pasted At : {report.reportfile.id}</CardSubtitle>
+                {this.showButtonIfFileExist(report)}
+              </CardBody>
+            </Card>
+
+          )
+      );
     }
   }
 
@@ -306,17 +309,18 @@ export default class report extends Component {
     //var today = new Date();
     //var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     //var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(); 
-    //var dateTime = date+' '+time; 
+    //var dateTime = date+' '+time;
+    const internID = this.state.internship;
     const data = new FormData();
     data.append('file', this.state.selectedFile);
     //data.append('reportedAt' , dateTime ) 
     data.append('description', this.state.description)
-    data.append('content', this.state.content);
+    //data.append('content', this.state.content);
     data.append('idsup', this.state.internship); //internship id to fetch the reports
     const token = sessionStorage.getItem('jwt');
     // const jsondata = JSON.stringify(data) ; 
 
-    fetch("http://localhost:8081/reports", {
+    fetch("http://localhost:8081/internships/" + internID + "/setreport", {
       method: 'POST',
       headers: {
         'Authorization': token
@@ -346,97 +350,111 @@ export default class report extends Component {
   }
 
   render() {
-    return (
-      <div className="content">
-        <NotificationAlert ref={this.notificationAlert} />
-        <h4 className="note"> Add report  </h4>
-        <div className="Newreport">
-          <Form className="form_addreport">
-            <FormGroup>
-              <Input
-                type="text"
-                className="description"
-                placeholder="Click here if you want to report something !"
-                value=""
-                onClick={this.toggleDialog}
-              />
-            </FormGroup>
-          </Form>
-
-          <div>
-            <Dialog open={this.state.isDialogOpen} onClose={this.toggleDialog} aria-labelledby="form-dialog-title">
-              <DialogTitle id="form-dialog-title">Publish a report</DialogTitle>
-              <DialogContent>
-
-                <Form>
+    if (this.state.internship == 0) {
+      return (
+        <div className="content">
+          <h3>You don't have any intership accepted!</h3>
+        </div>
+      )
+    } else {
+      return (
+        <div className="content row">
+          <NotificationAlert ref={this.notificationAlert} />
+          <Card className="col-8 ml-auto mr-auto">
+            <CardHeader>
+              <CardTitle tag="h4">Add report</CardTitle>
+            </CardHeader>
+            <CardBody>
+              <div className="Newreport mb-5">
+                <Form className="form_addreport">
                   <FormGroup>
                     <Input
-                      name="description"
-                      id="description"
+                      style={{width: '100%'}}
                       type="text"
-                      placeholder="Version"
-                      invalid={this.state.errors.description && !this.description}
-                      onChange={this.addhandleInputChange}
-
+                      className="description"
+                      placeholder="Click here if you want to report something !"
+                      value=""
+                      onClick={this.toggleDialog}
                     />
-
-                    <FormFeedback>{this.state.errors.description}</FormFeedback>
-                  </FormGroup>
-                  <FormGroup>
-                    <Input
-                      name="content"
-                      id="content"
-                      type="textarea"
-                      placeholder="Content"
-                      style={{ width: "500px" }}
-                      onChange={this.addhandleInputChange}
-                      invalid={this.state.errors.content}
-
-                    />
-                    <FormFeedback>{this.state.errors.content}</FormFeedback>
-                  </FormGroup>
-                  <FormGroup>
-                    <Input
-                      name="file"
-                      id="file"
-                      type="file"
-                      onChange={this.onFileChangeHandler}
-                    />
-
                   </FormGroup>
                 </Form>
 
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={this.toggleDialog} color="primary">
-                  Cancel
+                <div>
+                  <Dialog open={this.state.isDialogOpen} onClose={this.toggleDialog} aria-labelledby="form-dialog-title">
+                    <DialogTitle id="form-dialog-title">Publish a report</DialogTitle>
+                    <DialogContent>
+
+                      <Form>
+                        <FormGroup>
+                          <Input
+                            name="description"
+                            id="description"
+                            type="text"
+                            placeholder="Version"
+                            invalid={this.state.errors.description && !this.description}
+                            onChange={this.addhandleInputChange}
+
+                          />
+
+                          <FormFeedback>{this.state.errors.description}</FormFeedback>
+                        </FormGroup>
+                        <FormGroup>
+                          <Input
+                            name="content"
+                            id="content"
+                            type="textarea"
+                            placeholder="Content"
+                            style={{ width: "500px" }}
+                            onChange={this.addhandleInputChange}
+                            invalid={this.state.errors.content}
+
+                          />
+                          <FormFeedback>{this.state.errors.content}</FormFeedback>
+                        </FormGroup>
+                        <FormGroup>
+                          <Input
+                            name="file"
+                            id="file"
+                            type="file"
+                            onChange={this.onFileChangeHandler}
+                          />
+
+                        </FormGroup>
+                      </Form>
+
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={this.toggleDialog} color="primary">
+                        Cancel
                              </Button>
-                <Button onClick={this.submit} disabled={this.state.disabled} color="primary">
-                  Publish
+                      <Button onClick={this.submit} disabled={this.state.disabled} color="primary">
+                        Publish
                             </Button>
-              </DialogActions>
-            </Dialog>
-          </div>
+                    </DialogActions>
+                  </Dialog>
+                </div>
 
-        </div>
-        <div className="reports">
-          {this.displaymyreports()}
-        </div>
-
-        <Modal isOpen={this.state.isConfimationModalOpen} toggle={this.toggleCancelModal} >
-          <ModalHeader toggle={this.toggleCancelModal} >Remove this report ?</ModalHeader>
-          <ModalBody>
-            Do you really want to remove this report !
+              </div>
+              <div className="reports">
+                {this.displaymyreports()}
+              </div>
+            </CardBody>
+          </Card>
+          <Modal isOpen={this.state.isConfimationModalOpen} toggle={this.toggleCancelModal} >
+            <ModalHeader toggle={this.toggleCancelModal} >Remove this report ?</ModalHeader>
+            <ModalBody>
+              Do you really want to remove this report !
                           </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={(e) => this.removereport(this.state.selectedreport)} >Yes , just do it</Button>{' '}
-            <Button color="secondary" onClick={this.toggleCancelModal}>No</Button>
-          </ModalFooter>
-        </Modal>
+            <ModalFooter>
+              <Button color="primary" onClick={(e) => this.removereport(this.state.selectedreport)} >Yes , just do it</Button>{' '}
+              <Button color="secondary" onClick={this.toggleCancelModal}>No</Button>
+            </ModalFooter>
+          </Modal>
 
 
 
-      </div>
-    )
+        </div>
+      )
+    }
   }
 }

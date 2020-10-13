@@ -1,22 +1,3 @@
-/*!
-
-=========================================================
-* Paper Dashboard React - v1.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-/*eslint-disable*/
 import React from "react";
 import { Container, Row } from "reactstrap";
 // used for making the prop types of this component
@@ -33,29 +14,21 @@ class Footer extends React.Component {
             <nav className="footer-nav">
               <ul>
                 <li>
-                  <a href="https://www.creative-tim.com" target="_blank">
-                    Creative Tim
+                  <a href="http://ensias.um5.ac.ma/" target="_blank">
+                    Ensias web site
                   </a>
                 </li>
                 <li>
-                  <a href="https://blog.creative-tim.com" target="_blank">
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://www.creative-tim.com/license"
-                    target="_blank"
-                  >
-                    Licenses
+                  <a href="http://ensias.um5.ac.ma/article/master-internet-des-objets-logiciel-et-analytique-miola" target="_blank">
+                    Miola info
                   </a>
                 </li>
               </ul>
             </nav>
             <div className="credits ml-auto">
               <div className="copyright">
-                &copy; {1900 + new Date().getYear()}, made with{" "}
-                <i className="fa fa-heart heart" /> by Creative Tim
+                &copy; 2020, made with{" "}
+                <i className="fa fa-heart heart" /> by Boujnah Talhi Tarhri Boussalem
               </div>
             </div>
           </Row>

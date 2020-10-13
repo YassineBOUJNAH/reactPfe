@@ -27,6 +27,7 @@ import UpgradeToPro from "views/Upgrade.js";
 import Utilisateurs from 'views/Utilisateurs.js'
 import UsersManagement from 'views/UsersManagement'
 import IntershipsOffers from 'views/adminViews/IntershipsOffers'
+import StudentsInterships from 'views/adminViews/StudentsInterships';
 
 var routes = [
   // {
@@ -44,10 +45,17 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/intershipsOffers",
-    name: "Interships Offers",
-    icon: "nc-icon nc-bank",
+    path: "/internshipsOffers",
+    name: "Internships Offers",
+    icon: "nc-icon nc-briefcase-24",
     component: IntershipsOffers,
+    layout: "/admin",
+  },  
+  {
+    path: "/StudentsInternships",
+    name: "Students Internships",
+    icon: "nc-icon nc-hat-3",
+    component: StudentsInterships,
     layout: "/admin",
   },
 ];

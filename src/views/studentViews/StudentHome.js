@@ -92,9 +92,9 @@ const User = () => {
                     src={require("assets/img/damir-bosnjak.jpg")}
                   />
                 </div>
-                <CardBody>
+                <CardBody xs="4" className="row justify-content-sm-center">
                   <div className="author">
-                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                    <a href="#" onClick={(e) => e.preventDefault()}>
                       <img
                         alt="..."
                         className="avatar border-gray"
@@ -133,14 +133,6 @@ const User = () => {
                     </Row>
                   </div>
                 </CardFooter>
-              </Card>
-              <Card>
-                <CardBody>
-                <StudentMeetings></StudentMeetings>
-                <button type="submit" class="btn-round btn btn-primary">
-                    Show all
-                </button>
-                </CardBody>
               </Card>
               <Card>
                 <CardHeader>
@@ -182,10 +174,19 @@ const User = () => {
                   </ul>
                 </CardBody>
               </Card>
+              
             </Col>
             <Col md="8">
                 <Internship internship={internship}></Internship>
                 <InternshipOffers internship={internship} internshipOffers={internshipOffers}></InternshipOffers>
+                {/* <Card>
+                <CardBody>
+                <StudentMeetings></StudentMeetings>
+                <button type="submit" class="btn-round btn btn-primary">
+                    Show all
+                </button>
+                </CardBody>
+              </Card> */}
             </Col>
           </Row>
         </div>
