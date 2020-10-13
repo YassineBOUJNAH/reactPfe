@@ -122,7 +122,7 @@ export default class Login extends Component {
                 <div className="row ">
                     <Jumbotron className="mt-3 mx-auto col-md-9 col-13">
                         <Container >
-                            <h1  style={{  'text-align': 'center'}} className="display-3 ml-4 "><font size={"7"} style={{ 'height': '5px',   'text-align': 'center'}}  >Welcome to </font><p style={{ 'color': '#3f87d9' }} >MiolaPFE</p></h1>
+                            <h1  style={{  'textAlign': 'center'}} className="display-3 ml-4 "><font size={"7"} style={{ 'height': '5px',   'textAlign': 'center'}}  >Welcome to </font><p style={{ 'color': '#3f87d9' }} >MiolaPFE</p></h1>
                             <p className="lead  ml-5">If you need an account, you can request it from an administrator</p>
                             <Form onSubmit={this.handleSubmit} className="m-5">
                                 <FormGroup row>

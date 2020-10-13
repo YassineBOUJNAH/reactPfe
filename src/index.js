@@ -5,7 +5,7 @@ import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.css";
-import "assets/scss/paper-dashboard.scss?v=1.2.0";
+import "assets/scss/paper-dashboard.scss";
 import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import 'font-awesome/css/font-awesome.min.css'

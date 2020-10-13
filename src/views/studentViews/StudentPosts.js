@@ -17,7 +17,6 @@ const User = () => {
     const currentuser = JSON.parse(sessionStorage.getItem('currentuser')); //student   
 
     useEffect(() => {
-        console.log("component update...");
         fetchSupervisor();
         fetchInternshipOffers();
         fetchPost();
@@ -44,7 +43,6 @@ const User = () => {
           )};
     */
     const fetchSupervisor = async () => {
-        console.log("feeetch !!");
         const response = await fetch(
             "http://localhost:8081/internships/student/" + currentuser.id, {
             headers: { 'Authorization': token }
@@ -58,7 +56,6 @@ const User = () => {
     
 
     const fetchInternshipOffers = async () => {
-        console.log("feeetch !!");
         console.log(currentuser.id + " user id");
         const response = await fetch(
             "http://localhost:8081/internshipoffers/student/" + currentuser.id + "", {
@@ -71,7 +68,6 @@ const User = () => {
     };
 
     const fetchPost = async () => {
-        console.log("feeetch posts !!");
         console.log(currentuser.id + " user id");
 
         //const supID = supervisor[0].id;
