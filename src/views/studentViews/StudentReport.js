@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, FormGroup, CardHeader, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Button, FormFeedback, Alert, Card, CardBody, CardText, CardLink, CardSubtitle, CardTitle } from 'reactstrap'
+import { Form, FormGroup, Row, CardHeader, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Button, FormFeedback, Alert, Card, CardBody, CardText, CardLink, CardSubtitle, CardTitle } from 'reactstrap'
 import './post.css'
 
 
@@ -11,7 +11,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import NotificationAlert from "react-notification-alert";
 
-
+import { Link } from "react-router-dom";
 
 export default class report extends Component {
 
@@ -170,7 +170,7 @@ export default class report extends Component {
             <Card style={{ backgroundColor: '#f2ecba', borderColor: '#333', width: '100%' }} key={report.reportfile.id} className="card_post">
               <CardBody>
                 <CardTitle className="cardtitle">{report.reportfile.description}</CardTitle>
-                <CardSubtitle className="cardsub">Pasted At : {report.reportfile.id}</CardSubtitle>
+                <CardSubtitle className="cardsub">Report version : {report.reportfile.id}</CardSubtitle>
                 {this.showButtonIfFileExist(report)}
               </CardBody>
             </Card>
@@ -352,8 +352,18 @@ export default class report extends Component {
   render() {
     if (this.state.internship == 0) {
       return (
-        <div className="content">
-          <h3>You don't have any intership accepted!</h3>
+        <div className="content row">
+          <div className="col-8 ml-auto mr-auto">
+            <div className="content text-center">
+              <img
+                alt="..."
+                src={require("assets/img/cancel.png")}
+              />
+              <h4 className="text-center">Looks like you have any internship accepted!</h4>
+              <h6 className="text-center">You can create an internship offer, it's very easy</h6>
+              <Button color="primary" tag={Link} to="/home">Create internship offer</Button>
+            </div>
+          </div>
         </div>
       )
     } else {
@@ -369,10 +379,10 @@ export default class report extends Component {
                 <Form className="form_addreport">
                   <FormGroup>
                     <Input
-                      style={{width: '100%'}}
+                      style={{ width: '100%' }}
                       type="text"
                       className="description"
-                      placeholder="Click here if you want to report something !"
+                      placeholder="Click here if you want to add a report!"
                       value=""
                       onClick={this.toggleDialog}
                     />
@@ -390,7 +400,7 @@ export default class report extends Component {
                             name="description"
                             id="description"
                             type="text"
-                            placeholder="Version"
+                            placeholder="Title"
                             invalid={this.state.errors.description && !this.description}
                             onChange={this.addhandleInputChange}
 
@@ -403,7 +413,7 @@ export default class report extends Component {
                             name="content"
                             id="content"
                             type="textarea"
-                            placeholder="Content"
+                            placeholder="Description"
                             style={{ width: "500px" }}
                             onChange={this.addhandleInputChange}
                             invalid={this.state.errors.content}

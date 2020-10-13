@@ -10,7 +10,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import NotificationAlert from "react-notification-alert";
-
+import { Link } from "react-router-dom";
 
 
 export default class post extends Component {
@@ -154,7 +154,19 @@ export default class post extends Component {
 
   displaymyposts() {
     if (this.state.posts.length == 0) {
-      return (<h3>No posts by your supervisor</h3>);
+      return (
+      <div className="content row">
+      <div className="col-8 ml-auto mr-auto">
+        <div className="content text-center">
+          <img
+            alt="..."
+            src={require("assets/img/email.png")}
+          />
+          <h4 className="text-center">No posts by your supervisor</h4>
+        </div>
+      </div>
+    </div>
+    );
     } else {
       return (this.state.posts.map((post) =>
         <Card key={post.id} className="card_post">

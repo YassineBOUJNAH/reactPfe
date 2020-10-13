@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import StudentHome from "./StudentHome.js"
 import InternshipOfferForm from "./AddOfferForm.js"
+import NotificationAlert from "react-notification-alert" ; 
 
 // reactstrap components
 import {
@@ -41,7 +42,8 @@ const InternshipOffers = ({ internshipOffers, internship }, props) => {
     }).then((response) => {
       if (response.status >= 200 && response.status <= 299) {
         console.log("deleeeeeeeeeeeeetd id: "+id);
-        alert('internship offer deleted '+id);
+        //alert('internship offer deleted '+id);
+        window.location.reload(true);
       } else {
         throw "Something went wrong , error status : " + response.status;
       }
@@ -50,6 +52,8 @@ const InternshipOffers = ({ internshipOffers, internship }, props) => {
         console.log(error);
       });
   }
+
+
 
   return (
     <>

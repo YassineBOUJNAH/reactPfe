@@ -105,7 +105,6 @@ const AddOfferForm = ({toggle}) => {
                     <Input type="date" name="lasttdate" id="lasttdate" value={form.lasttdate} onChange={handleChange} />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="studentUsername">Student Username</Label>
                     <Input type="hidden" name="studentUsername" id="studentUsername" value={currentuser.username} onChange={handleChange} />
                 </FormGroup>
                 <Button color="primary">Submit</Button>

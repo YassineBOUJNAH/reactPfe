@@ -253,7 +253,17 @@ showButtonIfFileExist(post){
   displaymyposts(){  
     if(this.state.posts.length == 0){  
 
-      return(<h1>you have no post</h1>) ;
+      return(<div className="content row">
+      <div className="col-8 ml-auto mr-auto">
+        <div className="content text-center">
+          <img
+            alt="..."
+            src={require("assets/img/email.png")}
+          />
+          <h4 className="text-center">You have no post!</h4>
+        </div>
+      </div>
+    </div>) ;
 
     }else{
  
@@ -261,7 +271,7 @@ showButtonIfFileExist(post){
    <Card className="card_post">   
    <CardBody>     
         <CardTitle className="cardtitle">{post.description}</CardTitle> 
-        <CardSubtitle className="cardsub">Pasted At : {post.postedAt}</CardSubtitle> 
+        <CardSubtitle className="cardsub">Posted at : {post.postedAt}</CardSubtitle> 
          <CardText className = "cardtext">{post.content}</CardText>           
           {this.showButtonIfFileExist(post)}
           <div className="post_actions"> 

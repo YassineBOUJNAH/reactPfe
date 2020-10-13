@@ -3,6 +3,7 @@ import React, {useState, useEffect} from "react";
 import InternshipOffers from "views/studentViews/InternshipOffers.js"
 import Internship from "views/studentViews/Internship.js"
 import StudentMeetings from "./StudentMeetings.js"
+import { Link } from "react-router-dom";
 
 
 // reactstrap components
@@ -98,15 +99,16 @@ const User = () => {
                       <img
                         alt="..."
                         className="avatar border-gray"
-                        src={require("assets/img/mike.jpg")}
+                        src={require("assets/img/student.png")}
                       />
                       <h5 className="title">{currentuser.username}</h5>
                     </a>
-                    <p className="description">{currentuser.email}</p>
-                  </div>
-                  <p className="description text-center">
-                  {currentuser.frstname} {currentuser.username}
+                    <p className="description ">
+                  {currentuser.frstname} {currentuser.lastname}
                   </p>
+                  </div>
+                  <p className="description text-center">{currentuser.email}</p>
+                  
                 </CardBody>
                 <CardFooter>
                   <hr />
@@ -148,18 +150,19 @@ const User = () => {
                             <img
                               alt="..."
                               className="img-circle img-no-padding img-responsive"
-                              src={require("assets/img/faces/ayo-ogunseinde-2.jpg")}
+                              src={require("assets/img/faces/clem-onojeghuo-3.jpg")}
                             />
                           </div>
                         </Col>
                         <Col md="7" xs="7">
-                        {sup.supervisor.username} <br />
+                        {sup.supervisor.frstname} {sup.supervisor.lastname}<br />
                           <span className="text-muted">
                             <small>{sup.supervisor.email}</small>
                           </span>
                         </Col>
                         <Col className="text-right" md="3" xs="3">
                           <Button
+                            tag={Link} to="/student/myposts"
                             className="btn-round btn-icon"
                             color="success"
                             outline

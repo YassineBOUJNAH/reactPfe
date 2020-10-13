@@ -41,13 +41,7 @@ var routes = [
     component: Reports,
     layout: "/supervisor",
   } , 
-   {
-    path: "/user-page",
-    name: "User Profile",
-    icon: "nc-icon nc-circle-10",
-    component: UserPage ,
-    layout: "/supervisor",
-  } ,
+   
  
 ];
 export default routes ;
