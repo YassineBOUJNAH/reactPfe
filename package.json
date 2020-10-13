@@ -12,6 +12,7 @@
     "chart.js": "2.9.3",
     "font-awesome": "4.7.0",
     "history": "4.10.1",
+    "jest": "^26.5.3",
     "light-modal": "^1.2.1",
     "material-ui-search-bar": "^1.0.0",
     "node-sass": "^4.14.1",

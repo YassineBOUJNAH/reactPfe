@@ -332,7 +332,7 @@ class IntershipsOffers extends React.Component {
 
 
                 <Modal isOpen={this.state.isOpen} toggle={this.toggle}>
-                    <ModalHeader toggle={this.props.toggle}>Add new Supervisor</ModalHeader>
+                    <ModalHeader toggle={this.props.toggle}>Refuse Internship</ModalHeader>
                     <ModalBody>
                         <Form onSubmit={this.addhandleSubmit}>
                             <FormGroup>
