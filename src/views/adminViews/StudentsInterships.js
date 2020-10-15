@@ -3,6 +3,8 @@ import { Card, CardHeader, Row, CardBody, Col, Table, CardTitle,Button } from "r
 // react plugin for creating notifications over the dashboard
 import NotificationAlert from "react-notification-alert"; 
 import StudentModal from "../supervisorViews/studentModal" ; 
+import SERVER_URL from "../../variables/general";
+
 
 
 
@@ -24,7 +26,7 @@ class StudentsInterships extends React.Component {
     componentDidMount() {
         const token = sessionStorage.getItem('jwt');
 
-        fetch("http://localhost:8081/internships/", {
+        fetch(SERVER_URL+"internships/", {
             headers: { 'Authorization': token }
         })
             .then(res => res.json())

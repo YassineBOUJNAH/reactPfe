@@ -12,6 +12,8 @@ import '@phuocng/react-pdf-viewer/cjs/react-pdf-viewer.css';
 import { Worker } from '@phuocng/react-pdf-viewer'; 
 import SearchBar from "material-ui-search-bar";  
 import NotificationAlert from "react-notification-alert" ;  
+import SERVER_URL from "../../variables/general";
+
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -93,7 +95,7 @@ export default class post extends Component {
        
         
 
-        fetch("http://localhost:8081/sendemail" ,{ 
+        fetch(SERVER_URL+"sendemail" ,{ 
             method : 'POST' ,  
             headers: { 'Authorization': token    
             } ,  
@@ -238,7 +240,7 @@ export default class post extends Component {
     const token  = sessionStorage.getItem('jwt');  
     const currentuser =  JSON.parse(sessionStorage.getItem('currentuser')); 
       
-  fetch("192.168.1.20:8081/internships/sup/1/report", {
+  fetch(SERVER_URL+"internships/sup/1/report", {
     headers: { 'Authorization': token }
   })
     .then(res => res.json())

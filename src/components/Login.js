@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Alert, Label, Container, Input, Jumbotron, Col, FormFeedback } from 'reactstrap';
+import SERVER_URL from '../variables/general';
 
 export default class Login extends Component {
 
@@ -27,7 +28,7 @@ export default class Login extends Component {
 
     login = () => {
         const user = { username: this.state.username, password: this.state.password };
-        fetch('http://localhost:8081/login', {
+        fetch(SERVER_URL + "login", {
             method: 'POST',
             body: JSON.stringify(user)
         })
@@ -50,7 +51,7 @@ export default class Login extends Component {
     // Fetch all Users
     fetchCurrentUser = () => {
         const token = sessionStorage.getItem('jwt');
-        fetch('http://localhost:8081/Current', {
+        fetch(SERVER_URL + "Current", {
             headers: { 'Authorization': token }
         })
             .then((response) => response.json())

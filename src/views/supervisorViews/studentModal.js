@@ -1,5 +1,7 @@
 import React from 'react' 
 import { Button, Modal, ModalHeader , ModalFooter , ModalBody, FormFeedback, Form, Input, FormGroup, Label, Row, Table, Col, Card, CardHeader, CardTitle, CardBody,  UncontrolledAlert, Alert  } from 'reactstrap';
+import SERVER_URL from "../../variables/general";
+
 
 function studentModal(props) { 
 

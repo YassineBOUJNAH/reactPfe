@@ -2,6 +2,7 @@ import React from "react";
 import Button1 from "../supervisorViews/button1.js";
 import { Button, Modal, ModalHeader, ModalFooter, ModalBody, FormFeedback, Form, Input, FormGroup, Label, Row, Table, Col, Card, CardHeader, CardTitle, CardBody, UncontrolledAlert, Alert } from 'reactstrap';
 import SupervisorModal from "./SupervisorModal.js";
+import SERVER_URL from "../../variables/general";
 
 
 // react plugin for creating notifications over the dashboard
@@ -171,7 +172,7 @@ class StudentMeetings extends React.Component {
         const token = sessionStorage.getItem('jwt');
         const currentuser = JSON.parse(sessionStorage.getItem('currentuser'));
 
-        fetch("http://localhost:8081/internships/student/" + currentuser.id, {
+        fetch(SERVER_URL+"internships/student/" + currentuser.id, {
             headers: { 'Authorization': token }
         })
             .then(res => res.json())
@@ -202,7 +203,7 @@ class StudentMeetings extends React.Component {
 
         const token = sessionStorage.getItem('jwt');
 
-        fetch("http://localhost:8081/internships/cancelmeeting/" + this.state.selectedinternship, {
+        fetch(SERVER_URL+"nternships/cancelmeeting/" + this.state.selectedinternship, {
             method: 'PUT',
             headers: {
                 'Authorization': token,
@@ -246,7 +247,7 @@ class StudentMeetings extends React.Component {
 
             const token = sessionStorage.getItem('jwt');
 
-            fetch("http://localhost:8081/internships/" + this.state.selectedinternship, {
+            fetch(SERVER_URL+"internships/" + this.state.selectedinternship, {
                 method: 'PUT',
                 headers: {
                     'Authorization': token,

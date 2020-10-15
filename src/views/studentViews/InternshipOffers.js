@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import StudentHome from "./StudentHome.js"
 import InternshipOfferForm from "./AddOfferForm.js"
 import NotificationAlert from "react-notification-alert" ; 
+import SERVER_URL from "../../variables/general";
+
 
 // reactstrap components
 import {
@@ -36,7 +38,7 @@ const InternshipOffers = ({ internshipOffers, internship }, props) => {
 
   const deleteInternshipOffer = (id) => {
     const token = sessionStorage.getItem('jwt');
-    fetch("http://localhost:8081/internshipoffers/delete/" + id, {
+    fetch(SERVER_URL+"internshipoffers/delete/" + id, {
       headers: { 'Authorization': token },
       method: 'DELETE'
     }).then((response) => {

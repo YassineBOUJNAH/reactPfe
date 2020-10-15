@@ -4,6 +4,8 @@ import NotificationAlert from "react-notification-alert";
 import { toast } from 'react-toastify';
 import StudentHome from './StudentHome.js';
 import InternshipOffers from './InternshipOffers.js'
+import SERVER_URL from "../../variables/general";
+
 
 
 const AddOfferForm = ({toggle}) => {
@@ -24,7 +26,7 @@ const AddOfferForm = ({toggle}) => {
         console.log("feeetch !!");
         console.log(currentuser.id + " user id");
         const response = await fetch(
-            "http://localhost:8081/internshipoffers/student/" + currentuser.id + "", {
+            SERVER_URL+"internshipoffers/student/" + currentuser.id + "", {
             headers: { 'Authorization': token }
         }
         );
@@ -65,7 +67,7 @@ const AddOfferForm = ({toggle}) => {
         }
         console.log("hey oject: "+JSON.stringify(object));
         
-        await fetch('http://localhost:8081/internshipoffers?studentId=' + currentuser.id, {
+        await fetch(SERVER_URL+'internshipoffers?studentId=' + currentuser.id, {
             method: 'POST',
             headers: {
                 'Authorization': token,

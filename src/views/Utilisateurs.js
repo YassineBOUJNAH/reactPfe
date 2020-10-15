@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, FormFeedback, Form, Input, FormGroup, Label, Row, Table, Col, Card, CardHeader, CardTitle, CardBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import ProfileModale from '../components/profileModla';
-
+import SERVER_URL from '../variables/general'
 
 class Utilisateurs extends React.Component {
 
@@ -66,7 +66,7 @@ class Utilisateurs extends React.Component {
 
     addUser(user) {
         const token = sessionStorage.getItem('jwt');
-        fetch("http://localhost:8081/adduser",
+        fetch(SERVER_URL+"adduser",
             {
                 method: 'POST',
                 headers: {
@@ -116,7 +116,7 @@ class Utilisateurs extends React.Component {
     // Fetch all Users
     fetchUsers = () => {
         const token = sessionStorage.getItem('jwt');
-        fetch('http://localhost:8081/users', {
+        fetch(SERVER_URL + 'users', {
             headers: { 'Authorization': token }
         })
             .then((response) => response.json())

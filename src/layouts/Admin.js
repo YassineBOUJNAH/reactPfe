@@ -12,6 +12,7 @@ import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 import routes from "routes.js";
 import routesSupervisor from "routesSupervisor.js";
 import routesStudent from "routesStudent.js";
+import SERVER_URL from '../variables/general';
 
 
 
@@ -65,7 +66,7 @@ class Dashboard extends React.Component {
   renderRoute() {
 
     const token = sessionStorage.getItem('jwt');
-    fetch('http://localhost:8081/Current', {
+    fetch(SERVER_URL+'Current', {
       headers: { 'Authorization': token }
     })
       .then((response) => response.json())

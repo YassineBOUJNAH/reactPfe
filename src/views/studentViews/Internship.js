@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import StudentHome from "./StudentHome.js"
 import InternshipOfferForm from "./AddOfferForm.js"
+import SERVER_URL from "../../variables/general";
+
 
 // reactstrap components
 import {

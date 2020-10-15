@@ -6,6 +6,7 @@ import './modal.css' ;
 // react plugin for creating notifications over the dashboard
 import NotificationAlert from "react-notification-alert"; 
 import StudentModal from "./studentModal.js" ; 
+import SERVER_URL from "../../variables/general";
 
 
 class Internships extends React.Component {  
@@ -80,7 +81,7 @@ class Internships extends React.Component {
           const token  = sessionStorage.getItem('jwt');  
           const currentuser =  JSON.parse(sessionStorage.getItem('currentuser')); 
             
-        fetch("http://localhost:8081/supervisor/"+currentuser.id+"/internships", {
+        fetch(SERVER_URL+"supervisor/"+currentuser.id+"/internships", {
           headers: { 'Authorization': token }
         })
           .then(res => res.json())
@@ -131,7 +132,7 @@ class Internships extends React.Component {
 
       
 
-        fetch("http://localhost:8081/internships/"+this.state.selectedinternship , {  
+        fetch(SERVER_URL+"internships/"+this.state.selectedinternship , {  
           method : 'PUT' , 
           headers: { 'Authorization': token ,  
                      'Accept' : 'Application/json' , 

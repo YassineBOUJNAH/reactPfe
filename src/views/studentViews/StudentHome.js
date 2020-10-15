@@ -4,6 +4,8 @@ import InternshipOffers from "views/studentViews/InternshipOffers.js"
 import Internship from "views/studentViews/Internship.js"
 import StudentMeetings from "./StudentMeetings.js"
 import { Link } from "react-router-dom";
+import SERVER_URL from "../../variables/general";
+
 
 
 // reactstrap components
@@ -39,7 +41,7 @@ const User = () => {
   const fetchSupervisor = async () => {
     console.log("feeetch !!");
     const response = await fetch(
-      "http://localhost:8081/internships/student/"+currentuser.id, {
+      SERVER_URL+"internships/student/"+currentuser.id, {
         headers: { 'Authorization': token }
       }
     );
@@ -52,7 +54,7 @@ const User = () => {
     console.log("feeetch !!");
     console.log(currentuser.id+" user id");
     const response = await fetch(
-      "http://localhost:8081/internshipoffers/student/"+currentuser.id+"", {
+      SERVER_URL+"internshipoffers/student/"+currentuser.id+"", {
         headers: { 'Authorization': token }
       }
     );
@@ -65,7 +67,7 @@ const User = () => {
     const token = sessionStorage.getItem('jwt');
     const currentuser = JSON.parse(sessionStorage.getItem('currentuser'));
 
-    fetch("http://localhost:8081/internships/student/"+currentuser.id, {
+    fetch(SERVER_URL+"internships/student/"+currentuser.id, {
       headers: { 'Authorization': token }
     })
       .then(res => res.json())

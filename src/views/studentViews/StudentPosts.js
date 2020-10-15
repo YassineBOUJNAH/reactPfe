@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import InternshipOffers from "views/studentViews/InternshipOffers.js"
 import StudentMeetings from "./StudentMeetings.js"
+import SERVER_URL from "../../variables/general";
+
 
 
 // reactstrap components
@@ -44,7 +46,7 @@ const User = () => {
     */
     const fetchSupervisor = async () => {
         const response = await fetch(
-            "http://localhost:8081/internships/student/" + currentuser.id, {
+            SERVER_URL+"internships/student/" + currentuser.id, {
             headers: { 'Authorization': token }
         }
         );
@@ -58,7 +60,7 @@ const User = () => {
     const fetchInternshipOffers = async () => {
         console.log(currentuser.id + " user id");
         const response = await fetch(
-            "http://localhost:8081/internshipoffers/student/" + currentuser.id + "", {
+            SERVER_URL+"internshipoffers/student/" + currentuser.id + "", {
             headers: { 'Authorization': token }
         }
         );
@@ -75,7 +77,7 @@ const User = () => {
         console.log(supervisor);
         //const supID = supervisor[0].supervisor.id;
         const response = await fetch(
-            "http://localhost:8081/supervisors/"+supervisor+"/posts", {
+            SERVER_URL+"supervisors/"+supervisor+"/posts", {
             headers: { 'Authorization': token }
         }
         );

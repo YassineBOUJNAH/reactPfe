@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Form, FormGroup, Row, CardHeader, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Button, FormFeedback, Alert, Card, CardBody, CardText, CardLink, CardSubtitle, CardTitle } from 'reactstrap'
 import './post.css'
+import SERVER_URL from "../../variables/general";
+
 
 
 import Dialog from '@material-ui/core/Dialog';
@@ -58,7 +60,7 @@ export default class report extends Component {
     const token = sessionStorage.getItem('jwt');
     const currentuser = JSON.parse(sessionStorage.getItem('currentuser'));
 
-    fetch("http://localhost:8081/internships/student/" + currentuser.id, {
+    fetch(SERVER_URL+"internships/student/" + currentuser.id, {
       headers: { 'Authorization': token }
     })
       .then(res => res.json())
@@ -80,7 +82,7 @@ export default class report extends Component {
     const token = sessionStorage.getItem('jwt');
     console.log("id :" + id)
 
-    fetch("http://localhost:8081/reports/" + id, {
+    fetch(SERVER_URL+"reports/" + id, {
 
       headers: { 'Authorization': token },
       method: 'DELETE'
@@ -112,7 +114,7 @@ export default class report extends Component {
     const currentuser = JSON.parse(sessionStorage.getItem('currentuser'));
     const internshipID = this.state.internship;
 
-    fetch("http://localhost:8081/internships/student/" + currentuser.id, {
+    fetch(SERVER_URL+"internships/student/" + currentuser.id, {
       headers: { 'Authorization': token }
     })
       .then(res => res.json())
@@ -215,7 +217,7 @@ export default class report extends Component {
     const token = sessionStorage.getItem('jwt')
     const formData = new FormData();
     formData.append('file', this.state.selectedFile);
-    fetch('http://localhost:8081/upload', {
+    fetch(SERVER_URL+'upload', {
       headers: { 'Authorization': token },
       method: 'report',
       body: formData
@@ -320,7 +322,7 @@ export default class report extends Component {
     const token = sessionStorage.getItem('jwt');
     // const jsondata = JSON.stringify(data) ; 
 
-    fetch("http://localhost:8081/internships/" + internID + "/setreport", {
+    fetch(SERVER_URL+"internships/" + internID + "/setreport", {
       method: 'POST',
       headers: {
         'Authorization': token

@@ -2,6 +2,8 @@ import React from "react";
 import Button1 from "./button1" ; 
 import { Button, Modal, ModalHeader , ModalFooter , ModalBody, FormFeedback, Form, Input, FormGroup, Label, Row, Table, Col, Card, CardHeader, CardTitle, CardBody,  UncontrolledAlert, Alert  } from 'reactstrap';
 import StudentModal from "./studentModal.js" ;  
+import SERVER_URL from "../../variables/general";
+
 
 
 // react plugin for creating notifications over the dashboard
@@ -170,7 +172,7 @@ class Meetings extends React.Component {
         const token  = sessionStorage.getItem('jwt');  
         const currentuser =  JSON.parse(sessionStorage.getItem('currentuser')); 
           
-      fetch("http://localhost:8081/supervisor/"+currentuser.id+"/internships", {
+      fetch(SERVER_URL+"supervisor/"+currentuser.id+"/internships", {
         headers: { 'Authorization': token }
       })
         .then(res => res.json())
@@ -201,7 +203,7 @@ class Meetings extends React.Component {
   
         const token  = sessionStorage.getItem('jwt');    
 
-        fetch("http://localhost:8081/internships/cancelmeeting/"+this.state.selectedinternship , {  
+        fetch(SERVER_URL+"internships/cancelmeeting/"+this.state.selectedinternship , {  
           method : 'PUT' , 
           headers: { 'Authorization': token ,  
                      'Accept' : 'Application/json' , 

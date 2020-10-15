@@ -13,6 +13,8 @@ import NotificationAlert from "react-notification-alert" ;
 import  Select  from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import SERVER_URL from "../../variables/general";
+
 
 export default class post extends Component { 
 
@@ -67,7 +69,7 @@ export default class post extends Component {
     const token  = sessionStorage.getItem('jwt');  
     const currentuser =  JSON.parse(sessionStorage.getItem('currentuser')); 
       
-  fetch("http://localhost:8081/supervisor/"+currentuser.id+"/internships", {
+  fetch(SERVER_URL+"supervisor/"+currentuser.id+"/internships", {
     headers: { 'Authorization': token }
   })
     .then(res => res.json())
@@ -101,7 +103,7 @@ export default class post extends Component {
   const token  = sessionStorage.getItem('jwt');  
   console.log("id :"+id)
 
-  fetch("http://localhost:8081/posts/"+id , { 
+  fetch(SERVER_URL+"posts/"+id , { 
  
       headers : { 'Authorization' : token } , 
       method : 'DELETE'
@@ -133,7 +135,7 @@ export default class post extends Component {
     const token  = sessionStorage.getItem('jwt');  
     const currentuser =  JSON.parse(sessionStorage.getItem('currentuser')); 
       
-  fetch("http://localhost:8081/supervisors/"+currentuser.id+"/posts", {
+  fetch(SERVER_URL+"supervisors/"+currentuser.id+"/posts", {
     headers: { 'Authorization': token }
   })
     .then(res => res.json())
@@ -329,7 +331,7 @@ showButtonIfFileExist(post){
     const token = sessionStorage.getItem('jwt')    
     const formData = new FormData(); 
     formData.append('file', this.state.selectedFile);
-    fetch('http://localhost:8081/upload', { 
+    fetch(SERVER_URL+'upload', { 
         headers: { 'Authorization': token } ,
         method: 'post',
         body: formData
@@ -445,7 +447,7 @@ showButtonIfFileExist(post){
          const token  = sessionStorage.getItem('jwt');    
         // const jsondata = JSON.stringify(data) ; 
         
-         fetch("http://localhost:8081/posts" ,{ 
+         fetch(SERVER_URL+"posts" ,{ 
              method : 'POST' ,  
              headers: { 'Authorization': token    
              } ,  
