@@ -1,5 +1,5 @@
 import React from 'react';
-import { SERVER_URL } from '../variables/general';
+import SERVER_URL from '../variables/general';
 import { Button, Modal, ModalHeader, ModalBody, FormFeedback, Form, Input, FormGroup, Label } from 'reactstrap';
 import { toast } from 'react-toastify';
 

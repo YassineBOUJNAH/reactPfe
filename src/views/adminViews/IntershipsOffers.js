@@ -1,5 +1,5 @@
 import React from "react";
-import { SERVER_URL } from '../../variables/general'
+import SERVER_URL from '../../variables/general'
 import { FadeTransform } from 'react-animation-components';
 import NotificationAlert from "react-notification-alert";
 import { Modal, ModalHeader, ModalBody, Form, Input, FormGroup, Label } from 'reactstrap';

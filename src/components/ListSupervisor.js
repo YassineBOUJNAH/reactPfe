@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SERVER_URL } from '../variables/general'
+import  SERVER_URL  from '../variables/general'
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button, Row,CardHeader,CardFooter

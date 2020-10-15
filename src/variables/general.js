@@ -51,6 +51,8 @@ const tbody = [
 
 // data for <thead> of table in TableList view
 // data for <tbody> of table in TableList view
-export default SERVER_URL = 'https://springniolapfe.herokuapp.com';
+ const SERVER_URL = 'https://springniolapfe.herokuapp.com';
+
+export default  SERVER_URL ;
 
 export { thead, tbody };

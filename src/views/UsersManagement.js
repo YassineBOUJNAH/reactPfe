@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactTable from 'react-table';
-import { SERVER_URL } from '../variables/general';
+import  SERVER_URL  from '../variables/general';
 import { ToastContainer, toast } from 'react-toastify';
 import { Button, Card, CardTitle, CardHeader, CardBody, Row } from 'reactstrap'
 import NewStudentForm from '../components/NewStudentForm';
