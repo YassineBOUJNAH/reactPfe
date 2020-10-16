@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Login from './components/Login';
 
 import AdminLayout from "layouts/Admin.js";
-///////////////////
+//////////////////////////////////////////
 export const hist = createBrowserHistory();
 
 const ProtectedComponent = () => {
